@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# Список с вложенными элементами
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Задание
 
-## Available Scripts
+Реализовать приложение с древовидной структурой элементов. Должна быть возможность добавлять/удалять/редактировать
+название элементов. Также возможность сброса состояния до начального
 
-In the project directory, you can run:
+## Реализация
 
-### `npm start`
+Я придумал три варианта реализации этого задания, они отличаются способом хранения данных (и, соответственно, их
+обработкой):
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Массив элементов без вложенности, каждый из элементов хранит значение своего уровня вложенности.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+Пример:
+[{
+    text: 'Text 1',
+    level: 1,
+},
+{
+    text: 'Text 1-1',
+    level: 2,
+},
+{
+    text: 'Text 1-1-1',
+    level: 3,
+},
+{
+    text: 'Text 1-1-2',
+    level: 3,
+},
+{
+    text: 'Text 1-2',
+    level: 2,
+},
+{
+    text: 'Text 2',
+    level: 1,
+}]
+```
 
-### `npm test`
+2. Многомерная структура данных из вложенных массивов, которая повторяет структуру элементов списка при их отображении.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+Пример:
+[{
+    name: 'Text 1',
+    child: [
+        {
+            name: 'Text 1-1',
+            child: [
+                {
+                    name: 'Text 1-1-1',
+                    child: null,
+                },
+                {
+                    name: 'Text 1-1-2',
+                    child: null,
+                },
+            ],
+        },
+        {
+            name: 'Text 1-2',
+            child: null,
+        },
+    ],
+},
+{
+    name: 'Text 2',
+    child: null,
+}]
+```
 
-### `npm run build`
+3. Одномерная структура данных с полями-указателями на родительский элемент.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+Пример:
+[{
+    id: 1,
+    text: 'Text 1',
+    parent: null,
+},
+{
+    id: 2,
+    text: 'Text 1-1',
+    parent: 1,
+},
+{
+    id: 3,
+    text: 'Text 1-1-1',
+    parent: 2,
+},
+{
+    id: 4,
+    text: 'Text 1-1-2',
+    parent: 2,
+},
+{
+    id: 5,
+    text: 'Text 1-2',
+    parent: 1,
+},
+{
+    id: 6,
+    text: 'Text 2',
+    parent: null,
+}]
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+[//]: # (### Сравнение трёх методов)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[//]: # ()
 
-### `npm run eject`
+[//]: # (|                                       | Первый способ | Второй способ | Третий способ |)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+[//]: # (|---------------------------------------|---------------|---------------|---------------|)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[//]: # (| Читаемость данных в сыром &#40;JSON&#41; виде |               |   |   |)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+[//]: # (| Скорость отрисовки элементов списка   | Высокая       |   |   |)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+[//]: # (| Простота удаления элемента списка     |               |   |   |)
 
-## Learn More
+[//]: # (|                                       |               |   |   |)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+[//]: # (|                                       |               |   |   |)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[//]: # (|                                       |               |   |   |)
