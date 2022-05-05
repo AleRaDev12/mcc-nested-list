@@ -25,6 +25,10 @@
 	@apply bg-gray-800 p-5 mx-auto h-screen w-full min-w-[400px] max-w-2xl overflow-auto rounded-lg drop-shadow-2xl sm:max-h-full sm:w-4/5;
 }
 
+.checkbox {
+	@apply text-indigo-600 h-4 w-4 rounded-lg;
+}
+
 .treeList {
 	ul ul {
 		@apply ml-7;
@@ -51,7 +55,6 @@
 
 		input[type=text] {
 			@apply bg-transparent outline-0 shrink-0 grow;
-			position: relative;
 		}
 	}
 

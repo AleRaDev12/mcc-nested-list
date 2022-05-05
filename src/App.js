@@ -1,12 +1,12 @@
 import './index.scss'
-import SimpleStylesList from './SampleListWithoutLogic'
+import NonNestedComponentsList from './First/NonNestedComponentsList'
 
 
 function App() {
 	return (
 		<div className="app">
 			<div className="wrapper">
-				<SimpleStylesList/>
+				<NonNestedComponentsList/>
 			</div>
 		</div>
 	)
