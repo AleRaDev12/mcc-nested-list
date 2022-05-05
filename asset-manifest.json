@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/mcc-nested-list/static/css/main.04e5bfe3.css",
+    "main.js": "/mcc-nested-list/static/js/main.f724b974.js",
+    "index.html": "/mcc-nested-list/index.html",
+    "main.04e5bfe3.css.map": "/mcc-nested-list/static/css/main.04e5bfe3.css.map",
+    "main.f724b974.js.map": "/mcc-nested-list/static/js/main.f724b974.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.04e5bfe3.css",
+    "static/js/main.f724b974.js"
+  ]
+}
