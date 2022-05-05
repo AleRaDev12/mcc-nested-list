@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+	width:                10px;
+	scrollbar-base-color: rgb(17, 24, 39);
+}
+
+::-webkit-scrollbar-thumb {
+	box-shadow:    inset 0 0 6px rgba(255, 255, 255, 0.3);
+	border-radius: 100px;
+}
+
+::selection {
+	background: #ccc;
+	color:      #333;
+}
+
+.app {
+	@apply bg-gray-900 h-screen text-white py-0 sm:py-10
+}
+
+.wrapper {
+	@apply bg-gray-800 p-5 mx-auto h-screen w-full min-w-[400px] max-w-2xl overflow-auto rounded-lg drop-shadow-2xl sm:max-h-full sm:w-4/5;
+}
+
+.treeList {
+	ul ul {
+		@apply ml-7;
+	}
+
+	.treeList--item {
+		@apply p-3 my-3 bg-gray-700 hover:bg-gray-600 focus-within:bg-gray-600 rounded-lg flex justify-between overflow-auto select-none relative justify-between drop-shadow-sm items-center transition-colors ease-in;
+		> span {
+			@apply cursor-pointer;
+		}
+
+		> div {
+			@apply flex flex-nowrap opacity-5 transition ease-in;
+			svg {
+				@apply opacity-80 hover:opacity-100 cursor-pointer transition ease-in;
+			}
+		}
+
+		&:hover {
+			> div {
+				@apply opacity-100;
+			}
+		}
+
+		input[type=text] {
+			@apply bg-transparent outline-0 shrink-0 grow;
+			position: relative;
+		}
+	}
+
+	.treeList--buttons {
+		@apply flex justify-center mb-5 select-none;
+		button {
+			@apply bg-white hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mx-1 transition ease-in;
+		}
+	}
+}

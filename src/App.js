@@ -1,9 +1,15 @@
-function App() {
-  return (
-    <div>
+import './index.scss'
+import SimpleStylesList from './SampleListWithoutLogic'
 
-    </div>
-  );
+
+function App() {
+	return (
+		<div className="app">
+			<div className="wrapper">
+				<SimpleStylesList/>
+			</div>
+		</div>
+	)
 }
 
-export default App;
+export default App
