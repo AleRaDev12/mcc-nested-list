@@ -22,7 +22,7 @@
 }
 
 .wrapper {
-	@apply bg-gray-800 p-5 mx-auto h-screen w-full min-w-[400px] max-w-2xl overflow-auto rounded-lg drop-shadow-2xl sm:max-h-full sm:w-4/5;
+	@apply bg-gray-800 p-5 mx-auto h-screen w-full min-w-[400px] max-w-2xl overflow-auto rounded-lg drop-shadow-2xl sm:max-h-full sm:w-4/5 transition-all ease-in;
 }
 
 .checkbox {
@@ -34,11 +34,8 @@
 		@apply ml-7;
 	}
 
-	.treeList--item {
+	&--item {
 		@apply p-3 my-3 bg-gray-700 hover:bg-gray-600 focus-within:bg-gray-600 rounded-lg flex justify-between overflow-auto select-none relative justify-between drop-shadow-sm items-center transition-colors ease-in;
-		> span {
-			@apply cursor-pointer;
-		}
 
 		> div {
 			@apply flex flex-nowrap opacity-5 transition ease-in;
@@ -55,13 +52,24 @@
 
 		input[type=text] {
 			@apply bg-transparent outline-0 shrink-0 grow;
+
 		}
 	}
 
-	.treeList--buttons {
+	&--itemText {
+		@apply cursor-pointer grow;
+
+		&[data-id]::after {
+			content: 'id=' attr(data-id);
+			@apply text-xs text-gray-500 ml-2 absolute
+		}
+	}
+
+	&--buttons {
 		@apply flex justify-center mb-5 select-none;
 		button {
 			@apply bg-white hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mx-1 transition ease-in;
 		}
 	}
+
 }

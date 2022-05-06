@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react'
 import {NonNestedComponentsListData} from './data-mock'
+import {moveInArray} from '../utils'
 
 
 const CRUDContext = createContext()
@@ -83,7 +84,8 @@ export const CRUDProvider = ({children}) => {
 			}
 		}
 
-		setItems([...items.slice(0, to), ...items.slice(i, i + countWithChild), ...items.slice(to, i), ...items.slice(i + countWithChild, items.length)])
+		setItems([...moveInArray(items, i, to, countWithChild)])
+
 	}
 
 	const toDown = (i) => {
@@ -137,12 +139,7 @@ export const CRUDProvider = ({children}) => {
 
 		}
 
-		// от начала до предыдущего | 0 / i
-		// следующий элемент с его детьми | i + countWithChild / i + countWithChild + countNextWithChild
-		// текущий с детьми | i / i + countWithChild
-		// остаток | i + countWithChild + countNextWithChild / length
-
-		setItems([...items.slice(0, i), ...items.slice(i + countWithChild, i + countWithChild + countNextWithChild), ...items.slice(i, i + countWithChild), ...items.slice(i + countWithChild + countNextWithChild, items.length)])
+		setItems([...moveInArray(items, i, i + countWithChild, countWithChild, countNextWithChild)])
 	}
 
 	const toLeft = (i) => {
@@ -185,6 +182,7 @@ export const CRUDProvider = ({children}) => {
 
 	const reset = () => {
 		setItems(JSON.parse(JSON.stringify(NonNestedComponentsListData)))
+		console.log(JSON.stringify(NonNestedComponentsListData))
 	}
 
 	return (
