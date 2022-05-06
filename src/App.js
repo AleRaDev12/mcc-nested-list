@@ -30,7 +30,6 @@ function App() {
 						Второй вариант
 					</button>
 					<button
-						onClick={e => changeImplementation(2)}
 						className="bg-gray-900 text-xs text-gray-100 font-bold py-2 px-4 rounded-r transition ease-in cursor-wait"
 					>
 						Третий вариант (не готов)
