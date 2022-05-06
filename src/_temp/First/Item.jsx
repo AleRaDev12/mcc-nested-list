@@ -73,7 +73,6 @@ const Item = ({text, level, i}) => {
 					</div>
 				</>
 			}
-
 		</div>
 	)
 }

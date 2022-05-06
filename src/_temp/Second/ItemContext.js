@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react'
 import {FullNestedComponentsListData} from './data-mock'
-import {moveInArray} from '../utils'
+import {moveInArray} from '../../shared/utils/utils'
 
 
 const CRUDContext = createContext()

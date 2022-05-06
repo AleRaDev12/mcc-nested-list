@@ -1,16 +1,14 @@
 import React from 'react'
 import {TiArrowDownThick, TiArrowLeftThick, TiArrowRightThick, TiArrowUpThick, TiDelete} from 'react-icons/ti'
-import './index.scss'
+import './shared/ui/index.scss'
+import ActionButtons from './shared/ui/ActionButtons'
 
 
 const SimpleStylesList = () => {
 	return (<>
 			<div className={'treeList'}>
 
-				<div className={'treeList--buttons'}>
-					<button>Add item</button>
-					<button>Reset</button>
-				</div>
+				<ActionButtons/>
 
 				<ul>
 					<li className="treeList--item">List text sample

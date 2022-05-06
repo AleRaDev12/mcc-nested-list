@@ -1,7 +1,9 @@
-import './index.scss'
-import FullNestedComponentsList from './Second/FullNestedComponentsList'
-import NonNestedComponentsList from './First/NonNestedComponentsList'
+import './shared/ui/index.scss'
+import FullNestedComponentsList from './_temp/Second/FullNestedComponentsList'
+import NonNestedComponentsList from './_temp/First/NonNestedComponentsList'
 import {useState} from 'react'
+import SimpleStylesList from './SampleListWithoutLogic'
+import TreeList from './widgets/TreeList'
 
 
 function App() {
@@ -30,13 +32,15 @@ function App() {
 						Второй вариант
 					</button>
 					<button
-						className="bg-gray-900 text-xs text-gray-100 font-bold py-2 px-4 rounded-r transition ease-in cursor-wait"
+						className="bg-gray-500 text-xs text-gray-300 font-bold py-2 px-4 rounded-r transition ease-in cursor-wait"
 					>
 						Третий вариант (не готов)
 					</button>
 				</div>
 
-				{implementation === 1 ? <NonNestedComponentsList/> : <FullNestedComponentsList/>}
+				<TreeList/>
+				{/*<SimpleStylesList/>*/}
+				{/*{implementation === 1 ? <NonNestedComponentsList/> : <FullNestedComponentsList/>}*/}
 			</div>
 		</div>
 	)

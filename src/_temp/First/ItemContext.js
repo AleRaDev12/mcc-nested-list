@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react'
 import {NonNestedComponentsListData} from './data-mock'
-import {moveInArray} from '../utils'
+import {deleteItemsFromArray, moveInArray} from '../../shared/utils/utils'
 
 
 const CRUDContext = createContext()
@@ -36,7 +36,8 @@ export const CRUDProvider = ({children}) => {
 			}
 		}
 
-		setItems([...items.slice(0, i), ...items.slice(i + countWithChild, items.length)])
+		// setItems([...items.slice(0, i), ...items.slice(i + countWithChild, items.length)])
+		setItems(...deleteItemsFromArray(items, i, countWithChild))
 	}
 
 	const addItem = () => {
