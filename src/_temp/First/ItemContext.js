@@ -1,6 +1,7 @@
 import {createContext, useContext, useEffect, useState} from 'react'
 import {NonNestedComponentsListData} from './data-mock'
 import {deleteItemsFromArray, moveInArray} from '../../shared/utils/utils'
+import {addFirst, deleteFirst, first} from '../../CRUD-first'
 
 
 const CRUDContext = createContext()
@@ -23,124 +24,23 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	const deleteItem = (i) => {
-
-		let countWithChild = 1
-
-		if (isMoveWithChildren) {
-			// определить количество элементов текущего уровня
-			for (let j = i + 1; j < items.length; j++) {
-				if (items[j].level > items[i].level)
-					countWithChild++
-				if (items[j].level === items[i].level)
-					break
-			}
-		}
-
-		// setItems([...items.slice(0, i), ...items.slice(i + countWithChild, items.length)])
-		setItems(...deleteItemsFromArray(items, i, countWithChild))
+		setItems(first.deleteItem(i, isMoveWithChildren, items))
 	}
 
 	const addItem = () => {
-		setItems([...items, {text: 'Empty item', level: items.at(-1)?.level ?? 1}])
+		setItems(first.add(items))
 	}
 
 	const updateTextItem = (i, newText) => {
-		items[i].text = newText
-		setItems([...items])
+		setItems(first.update(i, newText,items))
 	}
 
 	const toUp = (i) => {
-
-		if (i === 0) {
-			console.log('Выше некуда')
-			return
-		}
-
-		let countWithChild = 1
-		let to = i - 1
-
-		if (isMoveWithChildren) {
-			// определить количество элементов текущего уровня
-			for (let j = i + 1; j < items.length; j++) {
-				if (items[j].level > items[i].level)
-					countWithChild++
-				if (items[j].level === items[i].level)
-					break
-			}
-
-			// найти точку для вставки (после элемента такого же уровня или на внешний уровень)
-			if (items[i - 1].level === items[i].level)
-				to = i - 1
-			else if (items[i - 1].level < items[i].level) {
-				for (let j = i; j < i + countWithChild; j++) {
-					items[j].level--
-				}
-			} else {
-				for (let j = i - 1; j >= 0; j--) {
-					if (items[j].level === items[i].level) {
-						to = j
-						break
-					}
-				}
-			}
-		}
-
-		setItems([...moveInArray(items, i, to, countWithChild)])
-
+		setItems(first.up(i, isMoveWithChildren, items))
 	}
 
 	const toDown = (i) => {
-
-		if (i + 1 === items.length) {
-			console.log('Ниже некуда')
-			return
-		}
-
-		let countWithChild = 1
-		let countNextWithChild = 1
-		let to = i - 1
-
-		if (isMoveWithChildren) {
-			// определить количество элементов текущего элемента с его наследниками
-			for (let j = i + 1; j < items.length; j++) {
-				if (items[j].level > items[i].level)
-					countWithChild++
-				if (items[j].level === items[i].level)
-					break
-			}
-
-			if (i + countWithChild >= items.length) {
-				console.log('Ниже некуда 2')
-				return
-			}
-
-			// определить количество элементов следующего элемента с его наследниками
-			for (let j = i + countWithChild + 1; j < items.length; j++) {
-				if (items[j].level > items[i + countWithChild].level)
-					countNextWithChild++
-				if (items[j].level === items[i].level)
-					break
-			}
-
-			// найти точку для вставки (после элемента такого же уровня или на внешний уровень)
-			if (items[i + countWithChild].level === items[i].level)
-				to = i + countWithChild
-			else if (items[i + countWithChild].level < items[i].level) {
-				for (let j = i; j < i + countWithChild; j++) {
-					items[j].level--
-				}
-			} else {
-				for (let j = i - 1; j >= 0; j--) {
-					if (items[j].level === items[i].level) {
-						to = j
-						break
-					}
-				}
-			}
-
-		}
-
-		setItems([...moveInArray(items, i, i + countWithChild, countWithChild, countNextWithChild)])
+		setItems(first.down(i, isMoveWithChildren, items))
 	}
 
 	const toLeft = (i) => {

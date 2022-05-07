@@ -20,5 +20,5 @@ export const moveInArray = (array, from, to, count = 1, count2 = 1) => {
 }
 
 export const deleteItemsFromArray = (array, from, count = 1) => {
-	return [[...array.slice(0, from), ...array.slice(from + count, array.length)]]
+	return [...array.slice(0, from), ...array.slice(from + count, array.length)]
 }

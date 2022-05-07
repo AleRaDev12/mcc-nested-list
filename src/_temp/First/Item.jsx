@@ -3,15 +3,15 @@ import {TiArrowDownThick, TiArrowLeftThick, TiArrowRightThick, TiArrowUpThick, T
 import {useNonNestedComponentsList} from './ItemContext'
 
 
-const Item = ({text, level, i}) => {
+const Item = ({item, i}) => {
 
 	const items = useNonNestedComponentsList()
 	const [isTextChanging, setIsTextChanging] = useState(false)
 	const [nowText, setNowText] = useState()
 
 	useEffect(() => {
-		setNowText(text)
-	}, [text])
+		setNowText(item.text)
+	}, [item.text])
 
 	const textChangingToggle = () => {
 		setIsTextChanging(prev => !prev)
@@ -33,7 +33,7 @@ const Item = ({text, level, i}) => {
 	}
 
 	return (
-		<div className={'treeList--item'} style={{marginLeft: (level - 1) * 1.75 + 'em'}}>
+		<div className={'treeList--item'} style={{marginLeft: (item.level - 1) * 1.75 + 'em'}}>
 			{isTextChanging
 				?
 				<>
@@ -49,7 +49,7 @@ const Item = ({text, level, i}) => {
 				</>
 				:
 				<>
-					<span onClick={textChangingToggle} data-id={null} className="treeList--itemText">{text}</span>
+					<span onClick={textChangingToggle} data-id={null} className="treeList--itemText">{item.text}</span>
 					<div>
 						<TiArrowLeftThick
 							onClick={e => items.crud.toLeft(i)}
