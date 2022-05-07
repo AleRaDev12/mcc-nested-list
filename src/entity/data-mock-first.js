@@ -1,5 +1,9 @@
 export const NonNestedComponentsListData = [
 	{
+		text: 'Text 0 - first',
+		level: 1,
+	},
+	{
 		text: 'Text 1',
 		level: 1,
 	},

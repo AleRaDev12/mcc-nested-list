@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { NonNestedComponentsListData } from './data-mock'
-import { first } from '../../new/CRUD'
+import { first } from './CRUD'
+import { second } from './CRUD'
 
 const CRUDContext = createContext()
 
-export const useNonNestedComponentsList = () => {
+export const useNestedList = () => {
 	return useContext(CRUDContext)
 }
 
@@ -12,21 +12,48 @@ export const CRUDProvider = ({ children }) => {
 
 	const [items, setItems] = useState([])
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
+	const [implementation, setImplementation] = useState(2)
+	const [choice, setChoice] = useState(second)
+
 
 	useEffect(() => {
+		console.log("Изменился implementation");
+		switch (implementation) {
+			case 1: setChoice(first)
+				break
+			case 2: setChoice(second)
+				break
+		}
+		console.log('Теперь choice = ', choice);
 		reset()
-	}, [])
+	}, [implementation])
+
+	const render = () => {
+		console.log('render from provider with implement = ', choice);
+		return choice.render(items)
+	}
 
 	const isMoveWithChildrenToggle = () => {
 		setIsMoveWithChildren(prev => !prev)
 	}
 
-	const deleteItem = (i) => {
-		setItems(first.remove(i, isMoveWithChildren, items))
+	const deleteItem = (iOrItem) => {
+
+		console.log('Начало удаления, choice = ', choice);
+
+		switch (choice) {
+			case first: setItems(choice.remove(items, iOrItem, isMoveWithChildren))
+			console.log('==first');
+			break
+			case second: setItems(choice.remove(items, iOrItem))
+			console.log('==second');
+			break
+		}
+		
 	}
 
 	const addItem = () => {
-		setItems(first.add(items))
+		setItems(choice.add(items))
 	}
 
 	const updateTextItem = (i, newText) => {
@@ -50,12 +77,16 @@ export const CRUDProvider = ({ children }) => {
 	}
 
 	const reset = () => {
-		setItems(JSON.parse(JSON.stringify(NonNestedComponentsListData)))
+		setItems(JSON.parse(JSON.stringify(choice.data)))
+		console.log('-----------------------------------------reset with', choice.data);
 	}
 
 	return (
 		<CRUDContext.Provider value={{
-			items: items,
+			items,
+			implementation,
+			setImplementation,
+			render,
 			crud: {
 				delete: deleteItem,
 				add: addItem,

@@ -8,15 +8,20 @@ const List = () => {
 	const {items} = useFullNestedComponentsList()
 	const [list, setlist] = useState([])
 
-	const renderChild = (item) => {
-		return item.map(node => <>
-			<Item item={node}/>
-			{node.child && <ul> {renderChild(node.child)}</ul>}
-		</>)
+	const render = (items) => {
+		return <>
+			{items.map(item => <>
+				<Item
+					key={Math.random()}
+					item={item}
+				/>
+				{item.child && <ul> {render(item.child)}</ul>}
+			</>)}
+		</>
 	}
 
 	useEffect(() => {
-		setlist(renderChild(items))
+		setlist(render(items))
 	}, [items])
 
 	return (

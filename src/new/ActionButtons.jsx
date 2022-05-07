@@ -1,20 +1,21 @@
 import React from 'react'
 import styles from './ActionButtons.module.scss'
+import { useNestedList } from './CRUDProvider'
 
 
-const ActionButtons = ({context}) => {
+const ActionButtons = () => {
 
-	const items = context()
+	const context = useNestedList()
 
 	return (
 		<div className={styles.buttons}>
 			<button
-				onClick={items.crud.add}
+				onClick={context.crud.add}
 			>
 				Add item
 			</button>
 			<button
-				onClick={items.crud.reset}
+				onClick={context.crud.reset}
 			>
 				Reset to mock data
 			</button>

@@ -1,7 +1,6 @@
-import React from 'react'
-import Item from './Item'
+import React, {useEffect, useState} from 'react'
 import {useNonNestedComponentsList} from './ItemContext'
-import {useEffect, useState} from 'react'
+import Item from './Item'
 
 
 const List = () => {
@@ -9,7 +8,7 @@ const List = () => {
 	const {items} = useNonNestedComponentsList()
 	const [list, setlist] = useState([])
 
-	const renderChild = (items) => {
+	const render = (items) => {
 		return <>
 			{items.map((item, i) => <Item
 				key={i} //temp
@@ -20,17 +19,12 @@ const List = () => {
 	}
 
 	useEffect(() => {
-		setlist(renderChild(items))
+		setlist(render(items))
 	}, [items])
 
 	return (
 		<>
-			{items.map((item, i) => <Item
-				key={i} //temp
-				item={item}
-				i={i}
-			/>)
-			}
+			{list}
 		</>
 	)
 }
