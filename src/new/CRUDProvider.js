@@ -12,8 +12,8 @@ export const CRUDProvider = ({ children }) => {
 
 	const [items, setItems] = useState([])
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
-	const [implementation, setImplementation] = useState(2)
-	const [choice, setChoice] = useState(second)
+	const [implementation, setImplementation] = useState(1)
+	const [choice, setChoice] = useState(first)
 
 
 	useEffect(() => {
@@ -56,8 +56,9 @@ export const CRUDProvider = ({ children }) => {
 		setItems(choice.add(items))
 	}
 
-	const updateTextItem = (i, newText) => {
-		setItems(first.update(i, newText, items))
+	const updateTextItem = (iOrItem, newText) => {
+		console.log('~~~~~', iOrItem, newText);
+		setItems(choice.update(items, iOrItem, newText))
 	}
 
 	const toUp = (i) => {

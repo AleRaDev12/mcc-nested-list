@@ -39,7 +39,7 @@ export const first = {
 		return [...items, { text: 'Empty item', level: items.at(-1)?.level ?? 1 }]
 	},
 
-	update: (i, newText, items) => {
+	update: (items, i, newText) => {
 		items[i].text = newText
 		return [...items]
 	},

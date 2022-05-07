@@ -19,7 +19,7 @@ const ChangeViewButtons = () => {
         <div className="inline-flex justify-center w-full pb-5">
             <button
                 onClick={e => changeImplementation(1)}
-                className={classNames({ 'bg-gray-700': implementation === 1 }, "bg-gray-900", "hover:bg-gray-700 text-xs text-gray-100 font-bold py-2 px-4  transition ease-in")}
+                className={classNames({ 'bg-gray-700': implementation === 1 }, "bg-gray-900", "hover:bg-gray-700 text-xs text-gray-100 font-bold py-2 px-4 rounded-l transition ease-in")}
 
             >
                 Первый вариант
