@@ -1,10 +1,11 @@
-import { deleteItemsFromArray, moveInArray } from '../shared/utils/utils'
-import { NonNestedComponentsListData } from '../entity/data-mock-first'
-import { FullNestedComponentsListData } from '../entity/data-mock-second'
+import {deleteItemsFromArray, moveInArray} from '../shared/utils/utils'
+import {NonNestedComponentsListData} from '../entity/data-mock-first'
+import {FullNestedComponentsListData} from '../entity/data-mock-second'
 
 // temp
 import Item from './Item'
 import React, {Fragment} from 'react'
+
 
 export const first = {
 	data: NonNestedComponentsListData,
@@ -36,7 +37,7 @@ export const first = {
 	},
 
 	add: (items) => {
-		return [...items, { text: 'Empty item', level: items.at(-1)?.level ?? 1 }]
+		return [...items, {text: 'Empty item', level: items.at(-1)?.level ?? 1}]
 	},
 
 	update: (items, i, newText) => {
@@ -173,11 +174,11 @@ export const first = {
 		}
 
 		return [...items]
-	}
+	},
 }
 
-
 const actualDataForLog = (data) => JSON.parse(JSON.stringify(data))
+
 
 class Second {
 	static secondFunctionsRemove = (arr, itemForDel) => {
@@ -311,7 +312,7 @@ class Second {
 		return <>
 			{items.map(item => <Fragment key={Math.trunc(Math.random() * 10000)}>
 				<Item
-					
+
 					item={item}
 				/>
 				{item.child && <ul> {this.render(item.child)}</ul>}
@@ -320,16 +321,17 @@ class Second {
 	}
 }
 
+
 export const second = {
 	data: FullNestedComponentsListData,
 	number: 2,
-	render: (items) =>  {
+	render: (items) => {
 		return <ul>{Second.render(items)}</ul>
 	},
 	remove: (items, item) => {
 		return [...Second.secondFunctionsRemove(items, item)]
 	},
-	add: (items) => [...items, { id: Math.trunc(Math.random() * 10000), text: 'Empty item' }],
+	add: (items) => [...items, {id: Math.trunc(Math.random() * 10000), text: 'Empty item'}],
 	update: (items, item, newText) => {
 		item.text = newText
 		return [...items]
@@ -337,5 +339,5 @@ export const second = {
 	up: (items, item) => [...Second.moveItemWithFindRecursive(items, item, -1)],
 	down: (items, item) => [...Second.moveItemWithFindRecursive(items, item, 1)],
 	left: (items, item) => [...Second.toLeftRecursive(items, item)],
-	right: (items, item) => [...Second.toRightRecursive(items, item)]
+	right: (items, item) => [...Second.toRightRecursive(items, item)],
 }

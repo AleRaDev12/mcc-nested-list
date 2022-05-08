@@ -23,13 +23,15 @@ const TreeList = () => {
 					<div
 						className={styles.treeList}
 					>
-						<div className="flex justify-center mb-5">
-							<ToggleChildrenMoving/>
-						</div>
-
 						<div className="mb-5 flex justify-between">
 
-							<div className="grow"><ActionButtons/></div>
+							<div className="grow flex items-center">
+								<ActionButtons/>
+
+								<div className="ml-3">
+									<ToggleChildrenMoving/>
+								</div>
+							</div>
 
 							<button
 								onClick={e => setIsDataPrinting(prev => !prev)}
@@ -39,9 +41,8 @@ const TreeList = () => {
 
 						</div>
 
-
 						<div className="flex flex-col sm:flex-row">
-							<div className='grow -mt-3'> <List/> </div>
+							<div className="grow -mt-3"><List/></div>
 							{isDataPrinting && <div className="sm:ml-5 sm:min-w-[240px] sm:w-[300px] sm:max-w-[300px] sm:mt-0 mt-3 grow-0">
 								<DataPrint/>
 							</div>
