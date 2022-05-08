@@ -133,9 +133,9 @@ export class Second {
 
 	static render(items) {
 		return <>
-			{items.map(item => <Fragment key={Math.trunc(Math.random() * 10000)}>
+			{items.map((item,i) => <Fragment key={Math.trunc(Math.random() * 10000)}>
 				<Item
-
+					i={i}
 					item={item}
 				/>
 				{item.child && <ul> {this.render(item.child)}</ul>}
