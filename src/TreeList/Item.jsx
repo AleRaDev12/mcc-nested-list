@@ -53,7 +53,7 @@ const Item = ({item, i}) => {
 				</>
 				:
 				<>
-					<span onClick={textChangingToggle} data-id={null} className={styles.text}>{item.text}</span>
+					<span onClick={textChangingToggle} data-id={null} className={styles.text}>{item.text} {JSON.stringify(i)} </span>
 					<div>
 						<TiArrowLeftThick
 							onClick={e => context.crud.toLeft(item, i)}

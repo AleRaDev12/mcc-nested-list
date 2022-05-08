@@ -131,15 +131,18 @@ export class Second {
 		return arr
 	}
 
-	static render(items) {
+	static render(items, indexes= []) {
+
 		return <>
-			{items.map((item,i) => <Fragment key={Math.trunc(Math.random() * 10000)}>
-				<Item
-					i={i}
-					item={item}
-				/>
-				{item.child && <ul> {this.render(item.child)}</ul>}
-			</Fragment>)}
+			{items.map((item, i) => (
+				<Fragment key={Math.trunc(Math.random() * 10000)}>
+					<Item
+						i={[...indexes, i]}
+						item={item}
+					/>
+					{item.child && <ul> {this.render(item.child, [...indexes, i])}</ul>}
+				</Fragment>
+			))}
 		</>
 	}
 }
