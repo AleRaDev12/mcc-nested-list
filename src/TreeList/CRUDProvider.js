@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react'
-import {first, second} from './CRUD'
+import {first} from './First/CRUDFirst'
+import {second} from './Second/CRUDSecond'
 
 
 const CRUDContext = createContext()
