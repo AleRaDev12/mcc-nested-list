@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import {TiArrowDownThick, TiArrowLeftThick, TiArrowRightThick, TiArrowUpThick, TiDelete} from 'react-icons/ti'
-import {useNonNestedComponentsList} from './ItemContext'
+import { useNestedList } from './CRUDProvider'
 
 
-const Item = ({text, level, i}) => {
+const Item = ({item, i}) => {
 
-	const items = useNonNestedComponentsList()
+	const context = useNestedList()
 	const [isTextChanging, setIsTextChanging] = useState(false)
 	const [nowText, setNowText] = useState()
 
 	useEffect(() => {
-		setNowText(text)
-	}, [text])
+		setNowText(item.text)
+	}, [item])
 
 	const textChangingToggle = () => {
 		setIsTextChanging(prev => !prev)
@@ -23,7 +23,7 @@ const Item = ({text, level, i}) => {
 
 	const keyPressHandler = (e) => {
 		if (e.key === 'Enter') {
-			items.crud.update(i, nowText)
+			context.crud.update(item, i, nowText)
 			textChangingToggle()
 		}
 	}
@@ -33,7 +33,10 @@ const Item = ({text, level, i}) => {
 	}
 
 	return (
-		<div className={'treeList--item'} style={{marginLeft: (level - 1) * 1.75 + 'em'}}>
+		<li
+			className={'treeList--item'}
+			style={item.level && {marginLeft: (item.level - 1) * 1.75 + 'em'}}
+		>
 			{isTextChanging
 				?
 				<>
@@ -49,32 +52,32 @@ const Item = ({text, level, i}) => {
 				</>
 				:
 				<>
-					<span onClick={textChangingToggle} data-id={null} className="treeList--itemText">{text}</span>
+					<span onClick={textChangingToggle} data-id={null} className="treeList--itemText">{item.text}</span>
 					<div>
 						<TiArrowLeftThick
-							onClick={e => items.crud.toLeft(i)}
+							onClick={e => context.crud.toLeft(item, i)}
 							size={24}
 						/>
 						<TiArrowUpThick
-							onClick={e => items.crud.toUp(i)}
+							onClick={e => context.crud.toUp(item, i)}
 							size={24}
 						/>
 						<TiArrowDownThick
-							onClick={e => items.crud.toDown(i)}
+							onClick={e => context.crud.toDown(item, i)}
 							size={24}
 						/>
 						<TiArrowRightThick
-							onClick={e => items.crud.toRight(i)}
+							onClick={e => context.crud.toRight(item, i)}
 							size={24}
 						/>
 						<TiDelete
-							onClick={e => items.crud.delete(i)}
+							onClick={e => context.crud.delete(item, i)}
 							size={24}/>
 					</div>
 				</>
 			}
 
-		</div>
+		</li>
 	)
 }
 

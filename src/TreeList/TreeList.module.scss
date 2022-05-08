@@ -1,0 +1,28 @@
+.treeList {
+	ul ul {
+		@apply ml-7;
+		//@apply border rounded-2xl border-gray-700;
+	}
+
+	&--item {
+		@apply p-3 mt-3 bg-gray-700 hover:bg-gray-600 focus-within:bg-gray-600 rounded-lg flex justify-between overflow-auto select-none relative justify-between drop-shadow-sm items-center transition-colors ease-in;
+
+		> div {
+			@apply flex flex-nowrap opacity-5 transition ease-in;
+			svg {
+				@apply opacity-80 hover:opacity-100 cursor-pointer transition ease-in;
+			}
+		}
+
+		&:hover {
+			> div {
+				@apply opacity-100;
+			}
+		}
+
+		input[type=text] {
+			@apply bg-transparent outline-0 shrink-0 grow;
+
+		}
+	}
+}

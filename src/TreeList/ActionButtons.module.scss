@@ -1,0 +1,6 @@
+.buttons {
+	@apply flex justify-center mb-5 select-none;
+	button {
+		@apply bg-white text-sm hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow mx-1 transition ease-in;
+	}
+}
