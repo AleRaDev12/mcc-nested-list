@@ -1,5 +1,4 @@
 import React from 'react'
-import Item from './Item'
 import {useEffect, useState} from 'react'
 import { useNestedList } from './CRUDProvider'
 
@@ -10,15 +9,15 @@ const List = () => {
 	const [list, setlist] = useState([])
 
 	useEffect(() => {
-		setlist(context.render())		
+		setlist(context.render())
 	}, [context.items, context.implementation])
 
 	return (
 		<>
 			{list}
-			<pre>{JSON.stringify(context.items, null, ' ')}</pre>
-			<br /><br /><br /><br />
-			<pre>{JSON.stringify(list, null, ' ')}</pre>
+			{/*<pre>{JSON.stringify(context.items, null, ' ')}</pre>*/}
+			{/*<br /><br /><br /><br />*/}
+			{/*<pre>{JSON.stringify(list, null, ' ')}</pre>*/}
 		</>
 	)
 }

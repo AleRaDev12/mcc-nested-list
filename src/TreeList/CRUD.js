@@ -10,7 +10,6 @@ export const first = {
 	data: NonNestedComponentsListData,
 	number: 1,
 	render: (items) => {
-		console.log('render first');
 		return <>
 			{items.map((item, i) => <Item
 				key={i} //temp
@@ -32,6 +31,7 @@ export const first = {
 					break
 			}
 		}
+
 		return deleteItemsFromArray(items, i, countWithChild)
 	},
 
@@ -79,7 +79,6 @@ export const first = {
 				}
 			}
 		}
-		console.log([...moveInArray(items, i, to, countWithChild)])
 		return [...moveInArray(items, i, to, countWithChild)]
 
 	},
@@ -179,7 +178,6 @@ export const first = {
 
 
 const actualDataForLog = (data) => JSON.parse(JSON.stringify(data))
-
 
 class Second {
 	static secondFunctionsRemove = (arr, itemForDel) => {
@@ -326,7 +324,7 @@ export const second = {
 	data: FullNestedComponentsListData,
 	number: 2,
 	render: (items) =>  {
-		console.log('render second')
+		console.log('Запущен рендер из второго CRUD, items = ', items)
 		return <ul>{Second.render(items)}</ul>
 	},
 	remove: (items, item) => {

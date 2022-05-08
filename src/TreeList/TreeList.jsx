@@ -4,6 +4,7 @@ import {CRUDProvider} from './CRUDProvider'
 import ActionButtons from './ActionButtons'
 import ChangeViewButtons from './ChangeViewButtons'
 import styles from './TreeList.module.scss'
+import ToggleChildrenMoving from "./ToggleChildrenMoving";
 
 const TreeList = () => {
 	return (
@@ -13,7 +14,7 @@ const TreeList = () => {
 			>
 				<ChangeViewButtons />
 				<ActionButtons/>
-				{/* <ToggleChildrenMoving/> */}
+				<ToggleChildrenMoving/>
 				<List/>
 			</div>
 		</CRUDProvider>

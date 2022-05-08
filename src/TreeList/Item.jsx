@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {TiArrowDownThick, TiArrowLeftThick, TiArrowRightThick, TiArrowUpThick, TiDelete} from 'react-icons/ti'
-import {useFullNestedComponentsList} from './ItemContext'
+import { useNestedList } from './CRUDProvider'
 
 
-const Item = ({item}) => {
+const Item = ({item, i}) => {
 
-	const items = useFullNestedComponentsList()
+	const context = useNestedList()
 	const [isTextChanging, setIsTextChanging] = useState(false)
 	const [nowText, setNowText] = useState()
 
@@ -23,7 +23,7 @@ const Item = ({item}) => {
 
 	const keyPressHandler = (e) => {
 		if (e.key === 'Enter') {
-			items.crud.update(item, nowText)
+			context.crud.update(item, i, nowText)
 			textChangingToggle()
 		}
 	}
@@ -33,7 +33,10 @@ const Item = ({item}) => {
 	}
 
 	return (
-		<li className={'treeList--item'}>
+		<li
+			className={'treeList--item'}
+			style={item.level && {marginLeft: (item.level - 1) * 1.75 + 'em'}}
+		>
 			{isTextChanging
 				?
 				<>
@@ -52,23 +55,23 @@ const Item = ({item}) => {
 					<span onClick={textChangingToggle} data-id={null} className="treeList--itemText">{item.text}</span>
 					<div>
 						<TiArrowLeftThick
-							onClick={e => items.crud.toLeft(item)}
+							onClick={e => context.crud.toLeft(item, i)}
 							size={24}
 						/>
 						<TiArrowUpThick
-							onClick={e => items.crud.toUp(item)}
+							onClick={e => context.crud.toUp(item, i)}
 							size={24}
 						/>
 						<TiArrowDownThick
-							onClick={e => items.crud.toDown(item)}
+							onClick={e => context.crud.toDown(item, i)}
 							size={24}
 						/>
 						<TiArrowRightThick
-							onClick={e => items.crud.toRight(item)}
+							onClick={e => context.crud.toRight(item, i)}
 							size={24}
 						/>
 						<TiDelete
-							onClick={e => items.crud.delete(item)}
+							onClick={e => context.crud.delete(item, i)}
 							size={24}/>
 					</div>
 				</>

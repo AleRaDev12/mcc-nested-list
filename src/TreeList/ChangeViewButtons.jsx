@@ -8,7 +8,7 @@ const ChangeViewButtons = () => {
     const {implementation, setImplementation} = useNestedList()
 
     useEffect(() => {
-        console.log('implementation', implementation);
+        console.log('log rom changeviewbuttons - useeffect - when impl update, implementation = ', implementation);
     }, [implementation])
 
     const changeImplementation = (i) => {
