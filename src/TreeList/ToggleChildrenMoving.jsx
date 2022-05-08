@@ -15,7 +15,7 @@ const ToggleChildrenMoving = () => {
 				checked={!context.options.isMoveWithChildren}
 				disabled={context.implementation !== 1}
 			/>
-			<span className="ml-2 text-xs sm:text-sm">Unlink parents</span>
+			<span className="ml-2 text-xs sm:text-sm">Unlink from parents</span>
 		</label>
 
 	)
