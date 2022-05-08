@@ -15,9 +15,6 @@ const List = () => {
 	return (
 		<>
 			{list}
-			{/*<pre>{JSON.stringify(context.items, null, ' ')}</pre>*/}
-			{/*<br /><br /><br /><br />*/}
-			{/*<pre>{JSON.stringify(list, null, ' ')}</pre>*/}
 		</>
 	)
 }

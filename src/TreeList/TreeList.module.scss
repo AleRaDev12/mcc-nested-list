@@ -1,4 +1,7 @@
 .treeList {
+
+	@apply grow transition ease-in;
+
 	ul ul {
 		@apply ml-7;
 		//@apply border rounded-2xl border-gray-700;

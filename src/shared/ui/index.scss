@@ -22,7 +22,7 @@
 }
 
 .wrapper {
-	@apply bg-gray-800 p-5 mx-auto h-screen w-full min-w-[400px] max-w-2xl overflow-auto sm:rounded-lg drop-shadow-2xl sm:max-h-full sm:w-4/5 transition-all ease-in;
+	@apply bg-gray-800 p-5 mx-auto h-screen w-full min-w-[400px] max-w-4xl overflow-auto sm:rounded-lg drop-shadow-2xl sm:max-h-full sm:w-4/5 transition-all ease-in;
 }
 
 .checkbox {

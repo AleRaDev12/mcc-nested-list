@@ -10,13 +10,13 @@ export const first = {
 	data: NonNestedComponentsListData,
 	number: 1,
 	render: (items) => {
-		return <>
+		return <ul>
 			{items.map((item, i) => <Item
 				key={i} //temp
 				item={item}
 				i={i}
 			/>)}
-		</>
+		</ul>
 	},
 	remove: (items, i, isMoveWithChildren) => {
 
@@ -157,7 +157,7 @@ export const first = {
 	right: (i, isMoveWithChildren, items) => {
 		if (i === 0) {
 			console.log('Перемещение невозможно (нет родительского элемента сверху)')
-			return
+			return [...items]
 		}
 		if (items[i - 1].level >= items[i].level) {
 			items[i].level++

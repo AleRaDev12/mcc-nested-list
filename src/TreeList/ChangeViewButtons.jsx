@@ -27,7 +27,7 @@ const ChangeViewButtons = () => {
                 Второй вариант
             </button>
             <button
-                className="bg-gray-900 text-xs text-gray-500 opacity-50 font-bold py-2 px-4 rounded-r transition ease-in cursor-wait"
+                className="bg-gray-900 text-xs text-gray-500 opacity-50 font-bold py-2 px-4 rounded-r transition ease-in cursor-not-allowed"
             >
                 Третий вариант (не готов)
             </button>

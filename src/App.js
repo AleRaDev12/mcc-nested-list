@@ -4,9 +4,9 @@ import TreeList from './TreeList/TreeList';
 function App() {
 
 	return (
-		<div className="app">
+		<div className="app flex">
 			<div className="wrapper">
-				<TreeList/>
+				<TreeList />
 			</div>
 		</div>
 	)
