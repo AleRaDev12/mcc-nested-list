@@ -16,7 +16,6 @@ export const CRUDProvider = ({children}) => {
     const [choice, setChoice] = useState(first)
 
     useEffect(() => {
-        console.log("Изменился implementation");
         switch (implementation) {
             case 1:
                 setChoice(first)
