@@ -12,7 +12,7 @@ const ActionButtons = () => {
 			<button
 				onClick={context.crud.add}
 			>
-				Add item
+				+ Add item
 			</button>
 			<button
 				onClick={context.crud.reset}

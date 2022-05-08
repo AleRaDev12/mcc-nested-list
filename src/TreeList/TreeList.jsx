@@ -4,45 +4,56 @@ import {CRUDProvider} from './CRUDProvider'
 import ActionButtons from './ActionButtons'
 import ChangeViewButtons from './ChangeViewButtons'
 import styles from './TreeList.module.scss'
-import ToggleChildrenMoving from "./ToggleChildrenMoving";
-import DataPrint from "./DataPrint";
+import ToggleChildrenMoving from './ToggleChildrenMoving'
+import DataPrint from './DataPrint'
+
 
 const TreeList = () => {
 
-    const [isDataPrinting, setIsDataPrinting] = useState(true)
+	const [isDataPrinting, setIsDataPrinting] = useState(true)
 
-    return (
-        <CRUDProvider>
-            <div>
-                <div className="flex justify-center flex-col items-center">
-                    <label className="inline-flex items-center cursor-pointer mb-5">
-                        <input
-                            type="checkbox"
-                            onChange={e => setIsDataPrinting(prev => !prev)}
-                            checked={isDataPrinting}
-                        />
-                        <span className="ml-2">Показать данные</span>
-                    </label>
-                    <ChangeViewButtons/>
-                </div>
+	return (
+		<CRUDProvider>
+			<div className="">
+				<div className="inline-flex justify-center w-full mb-3">
+					<ChangeViewButtons/>
+				</div>
 
-                <div className='flex'>
-                    <div
-                        className={styles.treeList}
-                    >
+				<div>
+					<div
+						className={styles.treeList}
+					>
+						<div className="flex justify-center mb-5">
+							<ToggleChildrenMoving/>
+						</div>
+
+						<div className="mb-5 flex justify-between">
+
+							<div className="grow"><ActionButtons/></div>
+
+							<button
+								onClick={e => setIsDataPrinting(prev => !prev)}
+							>
+								{!isDataPrinting ? 'Show data' : 'Hide data'}
+							</button>
+
+						</div>
 
 
-                        <ActionButtons/>
-                        <ToggleChildrenMoving/>
-                        <List/>
-                    </div>
-                    {isDataPrinting && <DataPrint/>
-                    }
-                </div>
-            </div>
+						<div className="flex flex-col sm:flex-row">
+							<div className='grow -mt-3'> <List/> </div>
+							{isDataPrinting && <div className="sm:ml-5 sm:min-w-[240px] sm:w-[300px] sm:max-w-[300px] sm:mt-0 mt-3 grow-0">
+								<DataPrint/>
+							</div>
+							}
+						</div>
+					</div>
 
-        </CRUDProvider>
-    )
+				</div>
+			</div>
+
+		</CRUDProvider>
+	)
 }
 
 export default TreeList

@@ -1,6 +1,5 @@
-import React from 'react'
-import {useEffect, useState} from 'react'
-import { useNestedList } from './CRUDProvider'
+import React, {useEffect, useState} from 'react'
+import {useNestedList} from './CRUDProvider'
 
 
 const List = () => {

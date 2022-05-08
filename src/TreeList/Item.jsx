@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {TiArrowDownThick, TiArrowLeftThick, TiArrowRightThick, TiArrowUpThick, TiDelete} from 'react-icons/ti'
 import { useNestedList } from './CRUDProvider'
+import styles from './Item.module.scss'
 
 
 const Item = ({item, i}) => {
@@ -34,7 +35,7 @@ const Item = ({item, i}) => {
 
 	return (
 		<li
-			className={'treeList--item'}
+			className={styles.Item}
 			style={item.level && {marginLeft: (item.level - 1) * 1.75 + 'em'}}
 		>
 			{isTextChanging
@@ -52,7 +53,7 @@ const Item = ({item, i}) => {
 				</>
 				:
 				<>
-					<span onClick={textChangingToggle} data-id={null} className="treeList--itemText">{item.text}</span>
+					<span onClick={textChangingToggle} data-id={null} className={styles.text}>{item.text}</span>
 					<div>
 						<TiArrowLeftThick
 							onClick={e => context.crud.toLeft(item, i)}

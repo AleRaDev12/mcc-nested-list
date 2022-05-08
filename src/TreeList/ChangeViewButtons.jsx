@@ -12,26 +12,26 @@ const ChangeViewButtons = () => {
 	}
 
     return (
-        <div className="inline-flex justify-center w-full pb-5">
+        <>
             <button
                 onClick={e => changeImplementation(1)}
-                className={classNames({ 'bg-gray-700': implementation === 1 }, "bg-gray-900", "hover:bg-gray-700 text-xs text-gray-100 font-bold py-2 px-4 rounded-l transition ease-in")}
+                className={classNames({ 'bg-gray-700': implementation === 1 }, "bg-gray-900", "hover:bg-gray-700 text-sm text-gray-100 font-bold py-2 px-8 rounded-l transition ease-in")}
 
             >
                 Первый вариант
             </button>
             <button
                 onClick={e => changeImplementation(2)}
-                className={classNames({ 'bg-gray-700': implementation === 2 }, "bg-gray-900", "hover:bg-gray-700 text-xs text-gray-100 font-bold py-2 px-4  transition ease-in")}
+                className={classNames({ 'bg-gray-700': implementation === 2 }, "bg-gray-900", "hover:bg-gray-700 text-sm text-gray-100 font-bold py-2 px-8  transition ease-in")}
             >
                 Второй вариант
             </button>
             <button
-                className="bg-gray-900 text-xs text-gray-500 opacity-50 font-bold py-2 px-4 rounded-r transition ease-in cursor-not-allowed"
+                className="bg-gray-900 text-sm text-gray-500 opacity-50 font-bold py-2 px-8 rounded-r transition ease-in cursor-not-allowed"
             >
                 Третий вариант (не готов)
             </button>
-        </div>
+        </>
     )
 }
 

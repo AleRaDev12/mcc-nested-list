@@ -1,0 +1,31 @@
+.Item {
+	@apply p-3 mt-3 bg-gray-700 hover:bg-gray-600 focus-within:bg-gray-600 rounded-lg flex justify-between select-none relative justify-between drop-shadow-sm items-center transition-colors ease-in overflow-auto;
+
+	> div {
+		@apply flex flex-nowrap opacity-50 sm:opacity-5 transition ease-in;
+		svg {
+			@apply opacity-80 hover:opacity-100 cursor-pointer transition ease-in;
+		}
+	}
+
+	&:hover {
+		> div {
+			@apply opacity-100;
+		}
+	}
+
+	input[type=text] {
+		@apply bg-transparent outline-0 shrink-0 grow;
+
+	}
+
+	.text {
+		@apply cursor-pointer grow;
+
+		&[data-id]::after {
+			content: 'id=' attr(data-id);
+			@apply text-xs text-gray-500 ml-2 absolute
+		}
+	}
+}
+

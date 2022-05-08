@@ -7,7 +7,7 @@ const ToggleChildrenMoving = () => {
     const context = useNestedList()
 
     return (
-        <div className="flex justify-center my-5">
+
             <label className="inline-flex items-center cursor-pointer">
                 <input
                     type="checkbox"
@@ -16,9 +16,9 @@ const ToggleChildrenMoving = () => {
                     checked={context.options.isMoveWithChildren}
                     disabled={context.implementation !== 1}
                 />
-                <span className="ml-2">Перемещать вместе/с учётом вложенных элементов</span>
+                <span className="ml-2 text-sm">Перемещать вместе/с учётом вложенных элементов</span>
             </label>
-        </div>
+
     )
 }
 
