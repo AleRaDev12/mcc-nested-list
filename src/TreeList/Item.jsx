@@ -49,7 +49,7 @@ const Item = ({item, i}) => {
 						onBlur={cancelEditing}
 						autoFocus={true}
 					/>
-					<span className="text-xs text-gray-200">для сохранения нажмите Enter</span>
+					<span className="text-xs text-gray-200">press Enter for save</span>
 				</>
 				:
 				<>
