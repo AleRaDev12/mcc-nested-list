@@ -1,6 +1,6 @@
-import {NonNestedComponentsListData} from '../../shared/data/data-mock-first'
+import {NonNestedComponentsListData} from '../../../shared/data/data-mock-first'
 import Item from '../Item'
-import {deleteItemsFromArray, moveInArray} from '../../shared/utils/utils'
+import {deleteItemsFromArray, moveInArray} from '../../../shared/utils/utils'
 import React from 'react'
 
 

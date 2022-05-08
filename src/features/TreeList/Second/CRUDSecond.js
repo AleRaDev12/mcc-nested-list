@@ -1,4 +1,4 @@
-import {FullNestedComponentsListData} from '../../shared/data/data-mock-second'
+import {FullNestedComponentsListData} from '../../../shared/data/data-mock-second'
 import React from 'react'
 import {Second} from './SecondRecursive'
 

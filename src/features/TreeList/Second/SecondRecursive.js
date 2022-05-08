@@ -1,4 +1,4 @@
-import {moveInArray} from '../../shared/utils/utils'
+import {moveInArray} from '../../../shared/utils/utils'
 import React, {Fragment} from 'react'
 import Item from '../Item'
 
