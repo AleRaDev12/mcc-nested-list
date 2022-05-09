@@ -135,7 +135,9 @@ export class SecondRecursive {
 
 		return <>
 			{items.map((item, index) => (
-				<Fragment key={Math.trunc(Math.random() * 10000)}>
+				<Fragment
+					key={item.text} // temp
+				>
 					<Item
 						index={[...indexes, index]}
 						item={item}
