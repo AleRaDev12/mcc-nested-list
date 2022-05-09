@@ -3,7 +3,7 @@ import React, {Fragment} from 'react'
 import Item from '../Item'
 
 
-export class Second {
+export class SecondRecursive {
 	static secondFunctionsRemove = (arr, itemForDel) => {
 		return arr.filter((item) => {
 			if (item !== itemForDel) {
@@ -131,15 +131,18 @@ export class Second {
 		return arr
 	}
 
-	static render(items) {
-		return <>
-			{items.map(item => <Fragment key={Math.trunc(Math.random() * 10000)}>
-				<Item
+	static render(items, indexes= []) {
 
-					item={item}
-				/>
-				{item.child && <ul> {this.render(item.child)}</ul>}
-			</Fragment>)}
+		return <>
+			{items.map((item, index) => (
+				<Fragment key={Math.trunc(Math.random() * 10000)}>
+					<Item
+						index={[...indexes, index]}
+						item={item}
+					/>
+					{item.child && <ul> {this.render(item.child, [...indexes, index])}</ul>}
+				</Fragment>
+			))}
 		</>
 	}
 }
