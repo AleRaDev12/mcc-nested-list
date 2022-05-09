@@ -1,7 +1,7 @@
 import {FullNestedComponentsListData} from '../../../shared/data/data-mock-second'
 import React from 'react'
 import {SecondRecursive} from './SecondRecursive'
-import {deepCopy, moveInArray} from '../../../shared/utils/utils'
+import {actualDataForLog, deepCopy, moveInArray} from '../../../shared/utils/utils'
 
 
 const getArrContainThisElementByIndex = (arr, index, level = 1) => {
@@ -53,16 +53,16 @@ export const second = {
 		} else return items
 	},
 	downByItem: (items, item) => [...SecondRecursive.moveItemWithFindRecursive(items, item, 1)],
-
 	downByIndex: (items, index) => {
 		// Если это не последний элемент на своём уровне (есть куда двигать)
 		if (getArrContainThisElementByIndex(items, index).array.length - 1 !== index.at(-1)) {
 			if (index.length >= 2) {
 				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, index, 2)
-				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1] + 1)
+				console.log('это', actualDataForLog(array[remainingIndexes[0]].child))
+				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1])
 				return [...items]
 			} else {
-				return [...moveInArray(items, index[0], index[0] + 1)]
+				return [...moveInArray(items, index[0], index[0])]
 			}
 		} else return items
 	},

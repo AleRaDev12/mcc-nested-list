@@ -44,38 +44,31 @@ export const first = {
 
 	up: (i, isMoveWithChildren, items) => {
 
-		if (i === 0) {
+		if (i === 0 || items[i].level > items[i - 1].level) {
 			console.log('Выше некуда')
 			return items
 		}
 
 		let countWithChild = 1
-		let to = i - 1
+		let to = i
 
 		if (isMoveWithChildren) {
-			// определить количество элементов текущего уровня
+			// определить количество вложенных элементов в данный
 			for (let j = i + 1; j < items.length; j++) {
 				if (items[j].level > items[i].level)
 					countWithChild++
-				if (items[j].level === items[i].level)
+				else if (items[j].level === items[i].level)
 					break
 			}
 
-			// найти точку для вставки (после элемента такого же уровня или на внешний уровень)
-			if (items[i - 1].level === items[i].level)
-				to = i - 1
-			else if (items[i - 1].level < items[i].level) {
-				for (let j = i; j < i + countWithChild; j++) {
-					items[j].level--
-				}
-			} else {
-				for (let j = i - 1; j >= 0; j--) {
-					if (items[j].level === items[i].level) {
-						to = j
-						break
-					}
+			// определить индекс для вставки
+			for (let j = i - 1; j >= 0; j--) {
+				if (items[j].level <= items[i].level) {
+					to = j
+					break
 				}
 			}
+
 		}
 		return [...moveInArray(items, i, to, countWithChild)]
 
@@ -83,21 +76,21 @@ export const first = {
 
 	down: (i, isMoveWithChildren, items) => {
 
-		if (i + 1 === items.length) {
+		if (i + 1 === items.length || items[i + 1].level < items[i].level) {
 			console.log('Ниже некуда')
 			return items
 		}
 
 		let countWithChild = 1
 		let countNextWithChild = 1
-		let to = i - 1
+		let to = i + 2
 
 		if (isMoveWithChildren) {
-			// определить количество элементов текущего элемента с его наследниками
+			// определить количество вложенных элементов в данный
 			for (let j = i + 1; j < items.length; j++) {
 				if (items[j].level > items[i].level)
 					countWithChild++
-				if (items[j].level === items[i].level)
+				else if (items[j].level === items[i].level)
 					break
 			}
 
@@ -106,32 +99,26 @@ export const first = {
 				return items
 			}
 
-			// определить количество элементов следующего элемента с его наследниками
-			for (let j = i + countWithChild + 1; j < items.length; j++) {
-				if (items[j].level > items[i + countWithChild].level)
-					countNextWithChild++
-				if (items[j].level === items[i].level)
-					break
-			}
-
-			// найти точку для вставки (после элемента такого же уровня или на внешний уровень)
-			if (items[i + countWithChild].level === items[i].level)
+			// определить индекс для вставки
+			if (items[i + countWithChild].level !== items[i].level) {
 				to = i + countWithChild
-			else if (items[i + countWithChild].level < items[i].level) {
-				for (let j = i; j < i + countWithChild; j++) {
-					items[j].level--
-				}
 			} else {
-				for (let j = i - 1; j >= 0; j--) {
-					if (items[j].level === items[i].level) {
-						to = j
-						break
+				if (items.length === i + countWithChild + 1) {
+					to = i + countWithChild + 1
+				} else {
+					for (let j = i + countWithChild + 1; j < items.length; j++) {
+						if (items[j].level <= items[i].level) {
+							to = j
+							break
+						} else if (j === items.length - 1) {
+							to = items.length
+						}
 					}
 				}
 			}
 		}
 
-		return [...moveInArray(items, i, i + countWithChild, countWithChild, countNextWithChild)]
+		return [...moveInArray(items, i, to, countWithChild)]
 	},
 
 	// Обновить: перемещать ниже элементов текущего уровня
@@ -140,16 +127,28 @@ export const first = {
 			items[i].level--
 
 			if (isMoveWithChildren) {
-				const startLevel = items[i].level + 1
-				for (let j = i + 1; j < items.length; j++) {
-					if (items[j].level > startLevel) {
-						items[j].level--
-					} else break
-				}
-			}
-		}
+				// сместить все вложенные элементы влево
+				// определить количество элементов текущего элемента с его наследниками
+				let countWithChild = 1
+				let to = i + 1
 
-		return [...items]
+				const startLevel = items[i].level + 1
+				let isFindingCountWithChild = true
+
+				for (let j = i + 1; j < items.length; j++) {
+					if (items[j].level > startLevel && isFindingCountWithChild) {
+						countWithChild++
+						items[j].level--
+					} else if (items[j].level < startLevel) {
+						to = j
+						break
+					} else isFindingCountWithChild = false
+				}
+
+				return [...moveInArray(items, i, to, countWithChild)]
+			}
+		} else return [...items]
+
 	},
 
 	right: (i, isMoveWithChildren, items) => {
