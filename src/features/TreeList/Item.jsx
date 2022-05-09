@@ -53,7 +53,13 @@ const Item = ({item, index}) => {
 				</>
 				:
 				<>
-					<span onClick={textChangingToggle} data-id={null} className={styles.text}>{item.text} {JSON.stringify(index)} </span>
+					<span
+						onClick={textChangingToggle}
+						data-id={JSON.stringify(index)}
+						className={styles.text}
+					>
+						{item.text}
+					</span>
 					<div>
 						<TiArrowLeftThick
 							onClick={e => context.crud.toLeft(item, index)}
@@ -62,15 +68,17 @@ const Item = ({item, index}) => {
 						<TiArrowUpThick
 							onClick={e => context.crud.toUp(item, index)}
 							size={24}
-							// data-inactive={(Array.isArray(i) && i.slice(-1).pop() === 0)}
+							data-inactive={Array.isArray(index) && index.at(-1) === 0}
 						/>
 						<TiArrowDownThick
 							onClick={e => context.crud.toDown(item, index)}
 							size={24}
+							className='down'
 						/>
 						<TiArrowRightThick
 							onClick={e => context.crud.toRight(item, index)}
 							size={24}
+							data-inactive={(Array.isArray(index) && index.at(-1) === 0)}
 						/>
 						<TiDelete
 							onClick={e => context.crud.delete(item, index)}

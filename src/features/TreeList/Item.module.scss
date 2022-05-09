@@ -6,9 +6,9 @@
 		svg {
 			@apply opacity-100 hover:opacity-100 cursor-pointer transition ease-in;
 
-			//&[data-inactive=true] {
-			//	@apply opacity-50 hover:opacity-60 cursor-not-allowed;
-			//}
+			&[data-inactive=true] {
+				@apply opacity-50 hover:opacity-60 cursor-not-allowed;
+			}
 		}
 	}
 
@@ -26,8 +26,8 @@
 		@apply cursor-pointer grow whitespace-nowrap text-ellipsis;
 
 		&[data-id]::after {
-			content: 'id=' attr(data-id);
-			@apply text-xs text-gray-500 ml-2 absolute
+			content: attr(data-id);
+			@apply text-xs text-gray-400 ml-2 absolute font-mono;
 		}
 	}
 }
