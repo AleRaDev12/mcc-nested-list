@@ -1,7 +1,7 @@
 import {FullNestedComponentsListData} from '../../../shared/data/data-mock-second'
 import React from 'react'
 import {SecondRecursive} from './SecondRecursive'
-import {deepCopy, moveInArray} from '../../shared/utils/utils'
+import {deepCopy, moveInArray} from '../../../shared/utils/utils'
 
 
 const getArrContainThisElementByIndex = (arr, index, level = 1) => {
