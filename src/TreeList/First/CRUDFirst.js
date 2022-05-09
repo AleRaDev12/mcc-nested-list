@@ -9,10 +9,10 @@ export const first = {
 	number: 1,
 	render: (items) => {
 		return <ul>
-			{items.map((item, i) => <Item
-				key={i} //temp
+			{items.map((item, index) => <Item
+				key={index} //temp
 				item={item}
-				i={i}
+				index={index}
 			/>)}
 		</ul>
 	},

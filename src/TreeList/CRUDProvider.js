@@ -13,16 +13,29 @@ export const CRUDProvider = ({children}) => {
 
 	const [items, setItems] = useState([])
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
-	const [implementation, setImplementation] = useState(1)
-	const [choice, setChoice] = useState(first)
+	const [implementation, setImplementation] = useState(2)
+
+	const toChoice = () => {
+		switch (implementation) {
+			case 1:
+				return first
+				break
+			case 2:
+				return second
+				setIsMoveWithChildren(true)
+				break
+		}
+	}
+
+	const [choice, setChoice] = useState(toChoice())
 
 	useEffect(() => {
 		switch (implementation) {
 			case 1:
-				setChoice(first)
+				setChoice(toChoice())
 				break
 			case 2:
-				setChoice(second)
+				setChoice(toChoice())
 				setIsMoveWithChildren(true)
 				break
 		}
@@ -40,13 +53,14 @@ export const CRUDProvider = ({children}) => {
 		setIsMoveWithChildren(prev => !prev)
 	}
 
-	const deleteItem = (item, i) => {
+	const deleteItem = (item, index) => {
 		switch (choice) {
 			case first:
-				setItems(choice.remove(items, i, isMoveWithChildren))
+				setItems(first.remove(items, index, isMoveWithChildren))
 				break
 			case second:
-				setItems(choice.remove(items, item))
+				// setItems(second.removeByItem(items, item))
+				setItems(second.removeByIndex(items, index))
 				break
 		}
 	}
@@ -55,61 +69,64 @@ export const CRUDProvider = ({children}) => {
 		setItems(choice.add(items))
 	}
 
-	const updateTextItem = (item, i, newText) => {
+	const updateTextItem = (item, index, newText) => {
 
 		switch (choice) {
 			case first:
-				setItems(choice.update(items, i, newText))
+				setItems(first.update(items, index, newText))
 				break
 			case second:
-				setItems(choice.update(items, item, newText))
+				// setItems(second.updateByItem(items, item, newText))
+				setItems(second.updateByIndex(items, index, newText))
 				break
 		}
 	}
 
-	const toUp = (item, i) => {
-
+	const toUp = (item, index) => {
 		switch (choice) {
 			case first:
-				setItems(choice.up(i, isMoveWithChildren, items))
+				setItems(first.up(index, isMoveWithChildren, items))
 				break
 			case second:
-				setItems(choice.remove(items, item))
+				// setItems(second.upByItem(items, item))
+				setItems(second.upByIndex(items, index))
 				break
 		}
 	}
 
-	const toDown = (item, i) => {
-
+	const toDown = (item, index) => {
 		switch (choice) {
 			case first:
-				setItems(choice.down(i, isMoveWithChildren, items))
+				setItems(choice.down(index, isMoveWithChildren, items))
 				break
 			case second:
-				setItems(choice.down(items, item))
+				// setItems(choice.downByItem(items, item))
+				setItems(second.downByIndex(items, index))
 				break
 		}
 	}
 
-	const toLeft = (item, i) => {
+	const toLeft = (item, index) => {
 
 		switch (choice) {
 			case first:
-				setItems(choice.left(i, isMoveWithChildren, items))
+				setItems(first.left(index, isMoveWithChildren, items))
 				break
 			case second:
-				setItems(choice.left(items, item))
+				// setItems(second.leftByItem(items, item))
+				setItems(second.leftByIndex(items, index))
 				break
 		}
 	}
 
-	const toRight = (item, i) => {
+	const toRight = (item, index) => {
 		switch (choice) {
 			case first:
-				setItems(choice.right(i, isMoveWithChildren, items))
+				setItems(choice.right(index, isMoveWithChildren, items))
 				break
 			case second:
-				setItems(choice.right(items, item))
+				// setItems(choice.rightByItem(items, item))
+				setItems(choice.rightByIndex(items, index))
 				break
 		}
 	}

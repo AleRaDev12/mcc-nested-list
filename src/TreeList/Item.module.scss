@@ -4,7 +4,11 @@
 	> div {
 		@apply flex flex-nowrap opacity-50 sm:opacity-5 transition ease-in;
 		svg {
-			@apply opacity-80 hover:opacity-100 cursor-pointer transition ease-in;
+			@apply opacity-100 hover:opacity-100 cursor-pointer transition ease-in;
+
+			//&[data-inactive=true] {
+			//	@apply opacity-50 hover:opacity-60 cursor-not-allowed;
+			//}
 		}
 	}
 
