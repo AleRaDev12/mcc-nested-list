@@ -1,6 +1,7 @@
 import {createContext, useContext, useEffect, useState} from 'react'
 import {first} from './First/CRUDFirst'
 import {second} from './Second/CRUDSecond'
+import {LinkedNestedComponentsList} from './Third/CRUDThird'
 
 
 const CRUDContext = createContext()
@@ -11,34 +12,36 @@ export const useNestedList = () => {
 
 export const CRUDProvider = ({children}) => {
 
+	const LINEAR = 'linear'
+	const NESTED = 'nested'
+
 	const [items, setItems] = useState([])
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
 	const [implementation, setImplementation] = useState(1)
+	const [printMethod, setPrintMethod] = useState(NESTED)
 
 	const toChoice = () => {
 		switch (implementation) {
 			case 1:
 				return first
-				break
 			case 2:
-				return second
 				setIsMoveWithChildren(true)
-				break
+				return second
+			case 3:
+				return LinkedNestedComponentsList
+			default:
+				return null
 		}
 	}
 
 	const [choice, setChoice] = useState(toChoice())
 
 	useEffect(() => {
-		switch (implementation) {
-			case 1:
-				setChoice(toChoice())
-				break
-			case 2:
-				setChoice(toChoice())
-				setIsMoveWithChildren(true)
-				break
-		}
+
+		setChoice(toChoice())
+		if (implementation === 2)
+			setIsMoveWithChildren(true)
+
 	}, [implementation])
 
 	useEffect(() => {
@@ -47,6 +50,18 @@ export const CRUDProvider = ({children}) => {
 
 	const render = () => {
 		return choice.render(items)
+	}
+
+	const getItems = () => {
+		switch (printMethod) {
+			case LINEAR: {
+				return {type: LINEAR, items: first.getItemsForPrintLinear(items)}
+			}
+			case NESTED:
+				return {type: NESTED, items: first.getItemsForPrintNested(items)}
+			default:
+				return null
+		}
 	}
 
 	const isMoveWithChildrenToggle = () => {
@@ -140,7 +155,9 @@ export const CRUDProvider = ({children}) => {
 			items,
 			implementation,
 			setImplementation,
+
 			render,
+			getItems,
 			crud: {
 				delete: deleteItem,
 				add: addItem,

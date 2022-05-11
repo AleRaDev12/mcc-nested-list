@@ -15,7 +15,7 @@ const TreeList = () => {
 	return (
 		<CRUDProvider>
 			<div className="">
-				<div className="inline-flex justify-center w-full mb-3">
+				<div className="inline-flex justify-center w-full mb-5 child:grow">
 					<ChangeViewButtons/>
 				</div>
 
@@ -35,6 +35,7 @@ const TreeList = () => {
 
 							<button
 								onClick={e => setIsDataPrinting(prev => !prev)}
+								className='underline'
 							>
 								{!isDataPrinting ? 'Show data' : 'Hide data'}
 							</button>
