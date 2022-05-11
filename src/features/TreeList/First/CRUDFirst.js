@@ -10,7 +10,7 @@ export const first = {
 	render: (items) => {
 		return <ul>
 			{items.map((item, index) => <Item
-				key={item.text} //temp
+				key={index} //temp
 				item={item}
 				index={index}
 			/>)}
