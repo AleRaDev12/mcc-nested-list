@@ -23,14 +23,32 @@ const Item = ({item, index}) => {
 	}
 
 	const keyPressHandler = (e) => {
-		if (e.key === 'Enter') {
-			context.crud.update(item, index, nowText)
-			textChangingToggle()
+
+		switch (e.key) {
+			case 'Enter': {
+				context.crud.update(item, index, nowText)
+
+				if (e.shiftKey)
+					context.crud.add(index)
+
+				cancelEditing()
+				break
+			}
+			case
+			'Escape': {
+				setNowText(item.text)
+				textChangingToggle()
+				break
+			}
+			default:
+				break
 		}
+
 	}
 
 	const cancelEditing = () => {
 		textChangingToggle()
+		setNowText(item.text)
 	}
 
 	return (
@@ -45,11 +63,11 @@ const Item = ({item, index}) => {
 						type="text"
 						value={nowText}
 						onChange={e => textChangingHandler(e)}
-						onKeyUp={e => keyPressHandler(e)}
+						onKeyDown={e => keyPressHandler(e)}
 						onBlur={cancelEditing}
 						autoFocus={true}
 					/>
-					<span className="text-xs text-gray-200">press Enter for save</span>
+					<span className="text-xs text-gray-200">press Enter for save, <br/>Shift+Enter to add item after that</span>
 				</>
 				:
 				<>
@@ -73,7 +91,7 @@ const Item = ({item, index}) => {
 						<TiArrowDownThick
 							onClick={e => context.crud.toDown(item, index)}
 							size={24}
-							className='down'
+							className="down"
 						/>
 						<TiArrowRightThick
 							onClick={e => context.crud.toRight(item, index)}

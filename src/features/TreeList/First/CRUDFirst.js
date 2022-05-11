@@ -33,8 +33,21 @@ export const first = {
 		return deleteItemsFromArray(items, i, countWithChild)
 	},
 
-	add: (items) => {
-		return [...items, {text: 'Empty item', level: items.at(-1)?.level ?? 1}]
+	add: (items, index) => {
+
+		if (typeof (index) === 'number') {
+			// temp - вынести в отдельную функцию (код повторяется)
+			let countWithChild = 1
+			for (let j = index + 1; j < items.length; j++) {
+				if (items[j].level > items[index].level)
+					countWithChild++
+				else if (items[j].level === items[index].level)
+					break
+			}
+
+			return [...items.insert({text: 'Empty item', level: items[index].level}, index + countWithChild)]
+		} else
+			return [...items, {text: 'Empty item', level: items.at(-1)?.level ?? 1}]
 	},
 
 	update: (items, i, newText) => {

@@ -26,7 +26,16 @@ export const second = {
 			.splice(index.at(-1), 1)
 		return [...items]
 	},
-	add: (items) => [...items, {text: 'Empty item'}],
+	add: (items, indexes) => {
+
+		if (Array.isArray(indexes)) {
+			const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes)
+			array.push({text: 'Empty item'})
+			return [...items]
+		} else
+			return [...items, {text: 'Empty item'}]
+
+	},
 	updateByItem: (items, item, newText) => {
 		item.text = newText
 		return [...items]

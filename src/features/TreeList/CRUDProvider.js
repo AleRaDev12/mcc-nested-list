@@ -65,8 +65,8 @@ export const CRUDProvider = ({children}) => {
 		}
 	}
 
-	const addItem = () => {
-		setItems(choice.add(items))
+	const addItem = (index = null) => {
+		setItems(choice.add(items, index))
 	}
 
 	const updateTextItem = (item, index, newText) => {

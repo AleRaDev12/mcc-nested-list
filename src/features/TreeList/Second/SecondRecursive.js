@@ -131,12 +131,12 @@ export class SecondRecursive {
 		return arr
 	}
 
-	static render(items, indexes= []) {
+	static render(items, indexes = []) {
 
 		return <>
 			{items.map((item, index) => (
 				<Fragment
-					key={item.text} // temp
+					key={item.text + ' ' + index} // temp
 				>
 					<Item
 						index={[...indexes, index]}
