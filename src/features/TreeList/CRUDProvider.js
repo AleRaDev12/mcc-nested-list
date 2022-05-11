@@ -17,7 +17,7 @@ export const CRUDProvider = ({children}) => {
 
 	const [items, setItems] = useState([])
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
-	const [implementation, setImplementation] = useState(2)
+	const [implementation, setImplementation] = useState(1)
 	const [printMethod, setPrintMethod] = useState(LINEAR)
 
 	const togglePrintMethod = () => {
@@ -34,11 +34,17 @@ export const CRUDProvider = ({children}) => {
 		}
 	}
 
-	const toChoice = () => {
+	console.log('ohohohoho')
+
+	const [choice, setChoice] = useState(toChoice())
+
+	function toChoice() {
+		console.log('toChoice', implementation)
 		switch (implementation) {
 			case 1:
 				return first
 			case 2:
+				console.log('olololo')
 				setIsMoveWithChildren(true)
 				return second
 			case 3:
@@ -48,10 +54,8 @@ export const CRUDProvider = ({children}) => {
 		}
 	}
 
-	const [choice, setChoice] = useState(toChoice())
-
 	useEffect(() => {
-
+		console.log('useEffect')
 		setChoice(toChoice())
 		if (implementation === 2)
 			setIsMoveWithChildren(true)
@@ -63,11 +67,8 @@ export const CRUDProvider = ({children}) => {
 		reset()
 	}, [choice])
 
-	const render = () => {
-		return choice.render(items)
-	}
-
 	const getItems = () => {
+		console.log('getItems')
 		switch (printMethod) {
 			case LINEAR: {
 				return {type: printMethod, items: choice.getItemsForPrintLinear(items)}

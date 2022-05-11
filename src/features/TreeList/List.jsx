@@ -1,6 +1,7 @@
 import React from 'react'
 import {useNestedList} from './CRUDProvider'
 import ListLinear from './ListLinear'
+import ListNested from './ListNested'
 
 
 const List = () => {
@@ -13,7 +14,7 @@ const List = () => {
 	return (
 		<>
 			{type === 'linear' && <ListLinear items={items}/>}
-			{/*{type === 'nested' && <ListNested items={items}/>}*/}
+			{type === 'nested' && <ListNested items={items}/>}
 		</>
 	)
 }

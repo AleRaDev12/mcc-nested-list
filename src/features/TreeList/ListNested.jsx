@@ -22,7 +22,8 @@ const ListNested = ({items}) => {
 
 	return (
 		<ul>
-			{render(items)}
+			1
+			{/*{render(items)}*/}
 		</ul>
 	)
 }

@@ -5,7 +5,6 @@ import React from 'react'
 
 export const first = {
 	data: NonNestedComponentsListData,
-	number: 1,
 
 	getItemsForPrintNested: (items) => {
 
@@ -145,7 +144,6 @@ export const first = {
 		return [...moveInArray(items, i, to, countWithChild)]
 	},
 
-	// Обновить: перемещать ниже элементов текущего уровня
 	left: (i, isMoveWithChildren, items) => {
 		console.log(i, items)
 		if (items[i].level > 1) {
