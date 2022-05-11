@@ -35,7 +35,7 @@ const TreeList = () => {
 
 							<button
 								onClick={e => setIsDataPrinting(prev => !prev)}
-								className='underline'
+								className="underline  hover:text-gray-200"
 							>
 								{!isDataPrinting ? 'Show data' : 'Hide data'}
 							</button>
@@ -43,7 +43,9 @@ const TreeList = () => {
 						</div>
 
 						<div className="flex flex-col sm:flex-row">
-							<div className="grow -mt-3"><List/></div>
+							<div className="grow -mt-3">
+								<List/>
+							</div>
 							{isDataPrinting && <div className="sm:ml-5 sm:min-w-[240px] sm:w-[300px] sm:max-w-[300px] sm:mt-0 mt-3 grow-0">
 								<DataPrint/>
 							</div>

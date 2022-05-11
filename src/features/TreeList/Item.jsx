@@ -4,7 +4,7 @@ import {useNestedList} from './CRUDProvider'
 import styles from './Item.module.scss'
 
 
-const Item = ({item, index}) => {
+const Item = ({item, index, ...props}) => {
 
 	const context = useNestedList()
 	const [isTextChanging, setIsTextChanging] = useState(false)
@@ -36,7 +36,7 @@ const Item = ({item, index}) => {
 	return (
 		<li
 			className={styles.Item}
-			style={item.level && {marginLeft: (item.level - 1) * 1.75 + 'em'}}
+			{...props}
 		>
 			{isTextChanging
 				?
@@ -73,7 +73,7 @@ const Item = ({item, index}) => {
 						<TiArrowDownThick
 							onClick={e => context.crud.toDown(item, index)}
 							size={24}
-							className='down'
+							className="down"
 						/>
 						<TiArrowRightThick
 							onClick={e => context.crud.toRight(item, index)}

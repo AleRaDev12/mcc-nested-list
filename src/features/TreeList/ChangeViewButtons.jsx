@@ -17,7 +17,6 @@ const ChangeViewButtons = () => {
 			<button
 				onClick={e => changeImplementation(1)}
 				className={classNames('bg-gray-900', {'bg-gray-600': implementation === 1}, 'hover:bg-gray-700 text-xs sm:text-sm text-gray-100 font-bold py-2 px-3 rounded-l transition ease-in')}
-
 			>
 				Первый вариант
 			</button>

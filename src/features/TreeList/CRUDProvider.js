@@ -17,8 +17,22 @@ export const CRUDProvider = ({children}) => {
 
 	const [items, setItems] = useState([])
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
-	const [implementation, setImplementation] = useState(1)
-	const [printMethod, setPrintMethod] = useState(NESTED)
+	const [implementation, setImplementation] = useState(2)
+	const [printMethod, setPrintMethod] = useState(LINEAR)
+
+	const togglePrintMethod = () => {
+		switch (printMethod) {
+			case LINEAR: {
+				setPrintMethod(NESTED)
+				break
+			}
+			case NESTED:
+				setPrintMethod(LINEAR)
+				break
+			default:
+				return null
+		}
+	}
 
 	const toChoice = () => {
 		switch (implementation) {
@@ -45,6 +59,7 @@ export const CRUDProvider = ({children}) => {
 	}, [implementation])
 
 	useEffect(() => {
+		console.log('log')
 		reset()
 	}, [choice])
 
@@ -55,10 +70,10 @@ export const CRUDProvider = ({children}) => {
 	const getItems = () => {
 		switch (printMethod) {
 			case LINEAR: {
-				return {type: LINEAR, items: first.getItemsForPrintLinear(items)}
+				return {type: printMethod, items: choice.getItemsForPrintLinear(items)}
 			}
 			case NESTED:
-				return {type: NESTED, items: first.getItemsForPrintNested(items)}
+				return {type: printMethod, items: choice.getItemsForPrintNested(items)}
 			default:
 				return null
 		}
@@ -85,7 +100,6 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	const updateTextItem = (item, index, newText) => {
-
 		switch (choice) {
 			case first:
 				setItems(first.update(items, index, newText))
@@ -122,9 +136,9 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	const toLeft = (item, index) => {
-
 		switch (choice) {
 			case first:
+				console.log(items)
 				setItems(first.left(index, isMoveWithChildren, items))
 				break
 			case second:
@@ -155,9 +169,8 @@ export const CRUDProvider = ({children}) => {
 			items,
 			implementation,
 			setImplementation,
-
-			render,
 			getItems,
+			togglePrintMethod,
 			crud: {
 				delete: deleteItem,
 				add: addItem,

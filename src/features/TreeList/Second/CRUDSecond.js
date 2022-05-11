@@ -18,6 +18,17 @@ export const second = {
 	render: (items) => {
 		return <ul>{SecondRecursive.render(items)}</ul>
 	},
+
+	getItemsForPrintNested: (items) => {
+		console.log('olo')
+		return items
+	},
+
+	getItemsForPrintLinear: (items) => {
+		console.log('olo 2')
+		return items
+	},
+
 	removeByItem: (items, item) => {
 		return [...SecondRecursive.secondFunctionsRemove(items, item)]
 	},
