@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useNestedList} from './CRUDProvider'
 import ListLinear from './ListLinear'
 import ListNested from './ListNested'
@@ -8,8 +8,13 @@ const List = () => {
 
 	const context = useNestedList()
 
-	const {type, items} = context.getItems()
-	console.log(type, items)
+	console.log('getItems() and type from List')
+	useEffect(() => {
+
+	})
+	const items = context.getItems()
+	const type = context.getType()
+	console.log('Получил тип и список элементов', type, items)
 
 	return (
 		<>

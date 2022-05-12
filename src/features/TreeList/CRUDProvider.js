@@ -10,17 +10,55 @@ export const useNestedList = () => {
 	return useContext(CRUDContext)
 }
 
+export const CRUDProvider2 = ({children}) => {
+	console.log('--------- CRUDProvider render ---------')
+	return (
+		<CRUDContext.Provider value={{
+			items: () => null,
+			implementation: () => null,
+			setImplementation: () => null,
+			getItems: () => null,
+			togglePrintMethod: () => null,
+			getType: () => null,
+			crud: {
+				remove: () => null,
+				add: () => null,
+				update: () => null,
+				toUp: () => null,
+				toDown: () => null,
+				toLeft: () => null,
+				toRight: () => null,
+				reset: () => null,
+			},
+			options: {
+				isMoveWithChildren: () => null,
+				isMoveWithChildrenToggle: () => null,
+			},
+		}}>
+			{children}
+		</CRUDContext.Provider>
+	)
+}
+
 export const CRUDProvider = ({children}) => {
+	console.log(' ')
+	console.log(' ')
+	console.log('--------- CRUDProvider main init ---------')
 
 	const LINEAR = 'linear'
 	const NESTED = 'nested'
 
-	const [items, setItems] = useState([])
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
-	const [implementation, setImplementation] = useState(1)
-	const [printMethod, setPrintMethod] = useState(LINEAR)
+
+	const [implementation, setImplementation] = useState(2)
+	const [printMethod, setPrintMethod] = useState(NESTED)
+
+	const [choice, setChoice] = useState(getChoice())
+
+	const [items, setItems] = useState()
 
 	const togglePrintMethod = () => {
+
 		switch (printMethod) {
 			case LINEAR: {
 				setPrintMethod(NESTED)
@@ -34,18 +72,13 @@ export const CRUDProvider = ({children}) => {
 		}
 	}
 
-	console.log('ohohohoho')
-
-	const [choice, setChoice] = useState(toChoice())
-
-	function toChoice() {
-		console.log('toChoice', implementation)
+	function getChoice() {
+		console.log('getChoice() from provider, implementation = ', implementation)
 		switch (implementation) {
 			case 1:
 				return first
 			case 2:
-				console.log('olololo')
-				setIsMoveWithChildren(true)
+
 				return second
 			case 3:
 				return LinkedNestedComponentsList
@@ -55,43 +88,56 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	useEffect(() => {
-		console.log('useEffect')
-		setChoice(toChoice())
-		if (implementation === 2)
-			setIsMoveWithChildren(true)
+		console.log(' ')
+		console.log('--------- CRUDProvider main render ---------')
+	}, [])
 
+	useEffect(() => {
+		console.log('--- useEffect from provider when [implementation] = ', implementation)
+		setChoice(getChoice())
+		if (choice === second)
+			setIsMoveWithChildren(true)
 	}, [implementation])
 
 	useEffect(() => {
-		console.log('log')
-		reset()
+		console.log('--- useEffect from provider when [choice] = ', choice)
+		if (choice) reset()
 	}, [choice])
 
+	const reset = () => {
+		setItems(JSON.parse(JSON.stringify(choice.data)))
+	}
+
 	const getItems = () => {
-		console.log('getItems')
-		switch (printMethod) {
-			case LINEAR: {
-				return {type: printMethod, items: choice.getItemsForPrintLinear(items)}
+		console.log('getItems() from provider')
+		if (items)
+			switch (printMethod) {
+				case LINEAR: {
+					return choice.getItemsForPrintLinear(items)
+				}
+				case NESTED:
+					return choice.getItemsForPrintNested(items)
+				default:
+					return null
 			}
-			case NESTED:
-				return {type: printMethod, items: choice.getItemsForPrintNested(items)}
-			default:
-				return null
-		}
+	}
+
+	const getType = () => {
+		return printMethod
 	}
 
 	const isMoveWithChildrenToggle = () => {
 		setIsMoveWithChildren(prev => !prev)
 	}
 
-	const deleteItem = (item, index) => {
+	const remove = (item) => {
 		switch (choice) {
 			case first:
-				setItems(first.remove(items, index, isMoveWithChildren))
+				setItems(first.remove(items, item, isMoveWithChildren))
 				break
 			case second:
 				// setItems(second.removeByItem(items, item))
-				setItems(second.removeByIndex(items, index))
+				setItems(second.removeByIndex(items, item))
 				break
 		}
 	}
@@ -100,70 +146,69 @@ export const CRUDProvider = ({children}) => {
 		setItems(choice.add(items))
 	}
 
-	const updateTextItem = (item, index, newText) => {
+	const updateTextItem = (item, newText) => {
 		switch (choice) {
 			case first:
-				setItems(first.update(items, index, newText))
+				setItems(first.update(items, item, newText))
 				break
 			case second:
 				// setItems(second.updateByItem(items, item, newText))
-				setItems(second.updateByIndex(items, index, newText))
+				setItems(second.updateByIndex(items, item, newText))
 				break
 		}
 	}
 
-	const toUp = (item, index) => {
+	const toUp = (item) => {
 		switch (choice) {
 			case first:
-				setItems(first.up(index, isMoveWithChildren, items))
+				setItems(first.up(items, item, isMoveWithChildren))
 				break
 			case second:
 				// setItems(second.upByItem(items, item))
-				setItems(second.upByIndex(items, index))
+				setItems(second.upByIndex(items, item))
 				break
 		}
 	}
 
-	const toDown = (item, index) => {
+	const toDown = (item) => {
 		switch (choice) {
 			case first:
-				setItems(choice.down(index, isMoveWithChildren, items))
+				setItems(choice.down(items, item, isMoveWithChildren))
 				break
 			case second:
 				// setItems(choice.downByItem(items, item))
-				setItems(second.downByIndex(items, index))
+				setItems(second.downByIndex(items, item))
 				break
 		}
 	}
 
-	const toLeft = (item, index) => {
+	const toLeft = (item) => {
 		switch (choice) {
 			case first:
 				console.log(items)
-				setItems(first.left(index, isMoveWithChildren, items))
+				setItems(first.left(items, item, isMoveWithChildren))
 				break
 			case second:
 				// setItems(second.leftByItem(items, item))
-				setItems(second.leftByIndex(items, index))
+				setItems(second.leftByIndex(items, item))
 				break
 		}
 	}
 
-	const toRight = (item, index) => {
+	const toRight = (item) => {
 		switch (choice) {
 			case first:
-				setItems(choice.right(index, isMoveWithChildren, items))
+				setItems(choice.right(items, item, isMoveWithChildren))
 				break
 			case second:
 				// setItems(choice.rightByItem(items, item))
-				setItems(choice.rightByIndex(items, index))
+				setItems(choice.rightByIndex(items, item))
 				break
 		}
 	}
 
-	const reset = () => {
-		setItems(JSON.parse(JSON.stringify(choice.data)))
-	}
+	console.log(' ')
+	console.log(' ')
 
 	return (
 		<CRUDContext.Provider value={{
@@ -172,8 +217,9 @@ export const CRUDProvider = ({children}) => {
 			setImplementation,
 			getItems,
 			togglePrintMethod,
+			getType,
 			crud: {
-				delete: deleteItem,
+				remove,
 				add: addItem,
 				update: updateTextItem,
 				toUp,

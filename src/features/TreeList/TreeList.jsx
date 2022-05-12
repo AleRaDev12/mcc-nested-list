@@ -5,6 +5,7 @@ import ChangeViewButtons from './ChangeViewButtons'
 import styles from './TreeList.module.scss'
 import ToggleChildrenMoving from './ToggleChildrenMoving'
 import DataPrint from './DataPrint'
+import List from './List'
 
 
 const TreeList = () => {
@@ -43,8 +44,7 @@ const TreeList = () => {
 
 						<div className="flex flex-col sm:flex-row">
 							<div className="grow -mt-3">
-								sdf
-								{/*<List/>*/}
+								<List/>
 							</div>
 							{isDataPrinting && <div className="sm:ml-5 sm:min-w-[240px] sm:w-[300px] sm:max-w-[300px] sm:mt-0 mt-3 grow-0">
 								<DataPrint/>

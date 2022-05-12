@@ -1,30 +1,32 @@
-import React from 'react'
+import React, {Fragment} from 'react'
+import Item from './Item'
 
 
 const ListNested = ({items}) => {
 
-	const render = (items, indexes = []) => {
-		console.log(items, indexes)
-		/*return <>
-			{items.map((item, index) => (
+	const render = (items) => {
+		// temp change map to diff type iterable func
+		return <>
+			{items && items.map(item => (
 				<Fragment
-					key={item.text} // temp
+					key={item.text + item.index} // temp
 				>
 					<Item
-						index={[...indexes, index]}
 						item={item}
 					/>
-					{item.child && <ul> {render(item.child, [...indexes, index])}</ul>}
+					{item.child && <ul> {render(item.child)}</ul>}
 				</Fragment>
 			))}
-		</>*/
+		</>
 	}
 
 	return (
-		<ul>
-			1
-			{/*{render(items)}*/}
-		</ul>
+		<>
+			nested list
+			<ul>
+				{render(items)}
+			</ul>
+		</>
 	)
 }
 

@@ -6,42 +6,51 @@ import React from 'react'
 export const first = {
 	data: NonNestedComponentsListData,
 
-	getItemsForPrintNested: (items) => {
+	getCountWithChild: (items, index) => {
 
-		let resultArray = []
-		let linksArray = [resultArray]
-		let nowLevel = 1
-		let to = linksArray[0]
-
-		items.forEach(item => {
-			if (item.level === nowLevel) {
-				to.push({text: item.text, child: []})
-				linksArray[nowLevel] = to.at(-1).child
-			} else if (item.level > nowLevel) {
-				if (!linksArray[nowLevel]) linksArray[nowLevel] = []
-				to = linksArray[nowLevel]
-				to.push({text: item.text, child: []})
-				nowLevel = item.level
-				linksArray[nowLevel] = to.at(-1).child
-			} else if (item.level < nowLevel) {
-				linksArray.pop()
-				nowLevel = item.level
-				to = linksArray[nowLevel - 1]
-				to.push({text: item.text, child: []})
-				linksArray[nowLevel] = to.at(-1).child
-			}
-		})
-
-		return resultArray
 	},
 
-	getItemsForPrintLinear: (items) => {
+	getItemsForPrintNested: (items) => {
+
+		// add indexes or delete this function
+		// let resultArray = []
+		// let linksArray = [resultArray]
+		// let nowLevel = 1
+		// let to = linksArray[0]
+		//
+		// items.forEach(item => {
+		// 	if (item.level === nowLevel) {
+		// 		to.push({text: item.text, child: []})
+		// 		linksArray[nowLevel] = to.at(-1).child
+		// 	} else if (item.level > nowLevel) {
+		// 		if (!linksArray[nowLevel]) linksArray[nowLevel] = []
+		// 		to = linksArray[nowLevel]
+		// 		to.push({text: item.text, child: []})
+		// 		nowLevel = item.level
+		// 		linksArray[nowLevel] = to.at(-1).child
+		// 	} else if (item.level < nowLevel) {
+		// 		linksArray.pop()
+		// 		nowLevel = item.level
+		// 		to = linksArray[nowLevel - 1]
+		// 		to.push({text: item.text, child: []})
+		// 		linksArray[nowLevel] = to.at(-1).child
+		// 	}
+		// })
+		//
+		// return resultArray
 		return items
 	},
 
-	remove: (items, i, isMoveWithChildren) => {
+	getItemsForPrintLinear: (items) => {
+		return items.map((item, i) => {
+			return {...item, index: i}
+		})
+	},
+
+	remove: (items, item, isMoveWithChildren) => {
 
 		let countWithChild = 1
+		const i = item.index
 
 		if (isMoveWithChildren) {
 			// определить количество элементов текущего уровня
@@ -60,13 +69,13 @@ export const first = {
 		return [...items, {text: 'Empty item', level: items.at(-1)?.level ?? 1}]
 	},
 
-	update: (items, i, newText) => {
-		items[i].text = newText
+	update: (items, item, newText) => {
+		items[item.index].text = newText
 		return [...items]
 	},
 
-	up: (i, isMoveWithChildren, items) => {
-
+	up: (items, item, isMoveWithChildren) => {
+		const i = item.index
 		if (i === 0 || items[i].level > items[i - 1].level) {
 			console.log('Выше некуда')
 			return items
@@ -97,15 +106,15 @@ export const first = {
 
 	},
 
-	down: (i, isMoveWithChildren, items) => {
+	down: (items, item, isMoveWithChildren) => {
 
+		const i = item.index
 		if (i + 1 === items.length || items[i + 1].level < items[i].level) {
 			console.log('Ниже некуда')
 			return items
 		}
 
 		let countWithChild = 1
-		let countNextWithChild = 1
 		let to = i + 2
 
 		if (isMoveWithChildren) {
@@ -144,8 +153,9 @@ export const first = {
 		return [...moveInArray(items, i, to, countWithChild)]
 	},
 
-	left: (i, isMoveWithChildren, items) => {
-		console.log(i, items)
+	left: (items, item, isMoveWithChildren) => {
+
+		const i = item.index
 		if (items[i].level > 1) {
 			items[i].level--
 
@@ -174,7 +184,8 @@ export const first = {
 
 	},
 
-	right: (i, isMoveWithChildren, items) => {
+	right: (items, item, isMoveWithChildren) => {
+		const i = item.index
 		if (i === 0) {
 			console.log('Перемещение невозможно (нет родительского элемента сверху)')
 			return [...items]

@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import {TiArrowDownThick, TiArrowLeftThick, TiArrowRightThick, TiArrowUpThick, TiDelete} from 'react-icons/ti'
-import {useNestedList} from './CRUDProvider'
 import styles from './Item.module.scss'
+import {useNestedList} from './CRUDProvider'
 
 
-const Item = ({item, index, ...props}) => {
+const Item = ({item, ...props}) => {
 
+	// console.log('usecontext start')
 	const context = useNestedList()
+	// const context = null
+	// console.log('usecontext end')
+
 	const [isTextChanging, setIsTextChanging] = useState(false)
 	const [nowText, setNowText] = useState()
 
@@ -24,7 +28,7 @@ const Item = ({item, index, ...props}) => {
 
 	const keyPressHandler = (e) => {
 		if (e.key === 'Enter') {
-			context.crud.update(item, index, nowText)
+			context.crud.update(item, nowText)
 			textChangingToggle()
 		}
 	}
@@ -55,33 +59,33 @@ const Item = ({item, index, ...props}) => {
 				<>
 					<span
 						onClick={textChangingToggle}
-						data-id={JSON.stringify(index)}
+						data-id={JSON.stringify(item.index)}
 						className={styles.text}
 					>
 						{item.text}
 					</span>
 					<div>
 						<TiArrowLeftThick
-							onClick={e => context.crud.toLeft(item, index)}
+							onClick={e => context.crud.toLeft(item)}
 							size={24}
 						/>
 						<TiArrowUpThick
-							onClick={e => context.crud.toUp(item, index)}
+							onClick={e => context.crud.toUp(item)}
 							size={24}
-							data-inactive={Array.isArray(index) && index.at(-1) === 0}
+							data-inactive={Array.isArray(item.index) && item.index.at(-1) === 0}
 						/>
 						<TiArrowDownThick
-							onClick={e => context.crud.toDown(item, index)}
+							onClick={e => context.crud.toDown(item)}
 							size={24}
 							className="down"
 						/>
 						<TiArrowRightThick
-							onClick={e => context.crud.toRight(item, index)}
+							onClick={e => context.crud.toRight(item)}
 							size={24}
-							data-inactive={(Array.isArray(index) && index.at(-1) === 0)}
+							data-inactive={(Array.isArray(item.index) && item.index.at(-1) === 0)}
 						/>
 						<TiDelete
-							onClick={e => context.crud.delete(item, index)}
+							onClick={e => context.crud.remove(item)}
 							size={24}
 							className="ml-3"
 						/>
