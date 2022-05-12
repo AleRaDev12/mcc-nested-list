@@ -29,32 +29,6 @@ export const second = {
 		return [...render(items)]
 	},
 
-	getItemsForPrintLinear2: (items) => {
-
-		let index = 0
-		let level = 1
-		const res = []
-
-		const render = (items) => {
-
-			return items && items.forEach(item => {
-				res.push({...item, index: index, level: level})
-				index++
-
-				if (item.child) {
-					level++
-					render(item.child)
-					level--
-				}
-			})
-		}
-
-		render(items)
-
-		console.log('res = ', JSON.stringify(res, null, ' '))
-		return res
-	},
-
 	getItemsForPrintLinear: (items) => {
 
 		let level = 1
@@ -72,10 +46,7 @@ export const second = {
 				}
 			})
 		}
-
 		render(items)
-
-		console.log('res = ', JSON.stringify(res, null, ' '))
 		return res
 	},
 

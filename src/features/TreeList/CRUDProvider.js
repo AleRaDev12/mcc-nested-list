@@ -1,7 +1,7 @@
 import {createContext, useContext, useEffect, useState} from 'react'
 import {first} from './First/CRUDFirst'
 import {second} from './Second/CRUDSecond'
-import {LinkedNestedComponentsList} from './Third/CRUDThird'
+import {third} from './Third/CRUDThird'
 
 
 const CRUDContext = createContext()
@@ -50,7 +50,7 @@ export const CRUDProvider = ({children}) => {
 
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
 
-	const [implementation, setImplementation] = useState(2)
+	const [implementation, setImplementation] = useState(3)
 	const [printMethod, setPrintMethod] = useState(NESTED)
 
 	const [choice, setChoice] = useState(getChoice())
@@ -81,7 +81,7 @@ export const CRUDProvider = ({children}) => {
 
 				return second
 			case 3:
-				return LinkedNestedComponentsList
+				return third
 			default:
 				return null
 		}

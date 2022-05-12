@@ -1,4 +1,4 @@
-export const LinkedNestedComponentsListData = [
+export const LinkedComponentsListData = [
 	{
 		id: 2,
 		text: 'Text 1',

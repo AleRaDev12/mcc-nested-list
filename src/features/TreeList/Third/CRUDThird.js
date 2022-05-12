@@ -1,10 +1,10 @@
-import {LinkedNestedComponentsListData} from '../../../shared/data/data-mock-third'
+import {LinkedComponentsListData} from '../../../shared/data/data-mock-third'
 import React from 'react'
-import {actualDataForLog, deepCopy, moveInArray} from '../../../shared/utils/utils'
-import Item from '../Item'
+import {deepCopy, moveInArray} from '../../../shared/utils/utils'
 
 
 const getArrContainThisElementByIndex = (arr, index, level = 1) => {
+	console.log('index = ', index)
 	let indexCopy = deepCopy(index)
 	if (indexCopy.length <= level)
 		return {array: arr, remainingIndexes: indexCopy}
@@ -12,86 +12,126 @@ const getArrContainThisElementByIndex = (arr, index, level = 1) => {
 		return getArrContainThisElementByIndex(arr[indexCopy.shift()].child, indexCopy, level)
 }
 
-export const LinkedNestedComponentsList = {
-	data: LinkedNestedComponentsListData,
-	number: 2,
-	render: (items) => {
+export const third = {
+	data: LinkedComponentsListData,
 
-		let f = items.filter(item => !item.parent && item)
-		console.log(f)
-
-
-
-		return <ul>{items.map(item => <Item key={item.id} item={item} index={0}>{item.text}</Item>)}</ul>
+	getItemsForPrintNested: (items) => {
+		const render = (items, indexes = []) => {
+			return items && items.map((item, index) => {
+				if (item.child) {
+					item.child = render(item.child, [...indexes, index])
+				}
+				return {...item, index: [...indexes, index]}
+			})
+		}
+		console.log('...render(items)', JSON.stringify([...render(items)], null, ' '))
+		return [...render(items)]
 	},
-	// removeByItem: (items, item) => {
-	// 	return [...SecondRecursive.secondFunctionsRemove(items, item)]
-	// },
-	// removeByIndex: (items, index) => {
-	// 	getArrContainThisElementByIndex(items, index).array
-	// 		.splice(index.at(-1), 1)
-	// 	return [...items]
-	// },
-	// add: (items) => [...items, {text: 'Empty item'}],
-	// updateByItem: (items, item, newText) => {
-	// 	item.text = newText
-	// 	return [...items]
-	// },
-	// updateByIndex: (items, indexes, newText) => {
-	// 	const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 1)
-	// 	array[remainingIndexes[0]].text = newText
-	// 	return [...items]
-	// },
-	// upByItem: (items, item) => [...SecondRecursive.moveItemWithFindRecursive(items, item, -1)],
-	// upByIndex: (items, index) => {
-	//
-	// 	Если это не первый элемент на своём уровне (есть куда двигать)
-		// if (index.at(-1) >= 1) {
-		//
-		// 	if (index.length >= 2) {
-		// 		const {array, remainingIndexes} = getArrContainThisElementByIndex(items, index, 2)
-		// 		array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1] - 1)
-		//
-		// 		return [...items]
-		// 	} else {
-		// 		return [...moveInArray(items, index[0], index[0] - 1)]
-		// 	}
-		// } else return items
-	// },
-	// downByItem: (items, item) => [...SecondRecursive.moveItemWithFindRecursive(items, item, 1)],
-	// downByIndex: (items, index) => {
-	// 	Если это не последний элемент на своём уровне (есть куда двигать)
-		// if (getArrContainThisElementByIndex(items, index).array.length - 1 !== index.at(-1)) {
-		// 	if (index.length >= 2) {
-		// 		const {array, remainingIndexes} = getArrContainThisElementByIndex(items, index, 2)
-		// 		console.log('это', actualDataForLog(array[remainingIndexes[0]].child))
-		// 		array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1])
-		// 		return [...items]
-		// 	} else {
-		// 		return [...moveInArray(items, index[0], index[0])]
-		// 	}
-		// } else return items
-	// },
-	// leftByItem: (items, item) => [...SecondRecursive.toLeftRecursive(items, item)],
-	// leftByIndex: (items, indexes) => {
-	//
-	// 	if (indexes.length >= 2) {
-	// 		const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
-	// 		array.insert(array[remainingIndexes[0]].child.splice(remainingIndexes[1], 1).at(0), remainingIndexes[0] + 1)
-	// 		return [...items]
-	// 	} else return items
-	// },
-	// rightByItem: (items, item) => [...SecondRecursive.toRightRecursive(items, item)],
-	// rightByIndex: (items, indexes) => {
-	//
-	// 	if (indexes.at(-1) !== 0) {
-	// 		const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 1)
-	// 		if (!array[remainingIndexes[0] - 1].child) {
-	// 			array[remainingIndexes[0] - 1].child = []
-	// 		}
-	// 		array[remainingIndexes[0] - 1].child.insert(array.splice(remainingIndexes[0], 1).at(0), array[remainingIndexes[0] - 1].child.length)
-	//
-	// 		return [...items]
-	// 	} else return items
-	// },
+
+	getItemsForPrintLinear: (items) => {
+		let level = 1
+		const res = []
+
+		const render = (items, indexes = []) => {
+
+			return items && items.forEach((item, index) => {
+				res.push({...item, index: [...indexes, index], level: level})
+
+				if (item.child) {
+					level++
+					render(item.child, [...indexes, index])
+					level--
+				}
+			})
+		}
+
+		render(items)
+
+		console.log('res = ', JSON.stringify(res, null, ' '))
+		return res
+	},
+
+	removeByItem: (items, item) => {
+		// return [...SecondRecursive.secondFunctionsRemove(items, item)]
+	},
+	removeByIndex: (items, item) => {
+		const index = item.index
+		getArrContainThisElementByIndex(items, index).array
+			.splice(index.at(-1), 1)
+		return [...items]
+	},
+	add: (items) => [...items, {text: 'Empty item'}],
+	updateByItem: (items, item, newText) => {
+		item.text = newText
+		return [...items]
+	},
+	updateByIndex: (items, item, newText) => {
+		const indexes = item.index
+		const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 1)
+		array[remainingIndexes[0]].text = newText
+		return [...items]
+	},
+	upByItem: (items, item) => {
+		// [...SecondRecursive.moveItemWithFindRecursive(items, item, -1)]
+	},
+	upByIndex: (items, item) => {
+		const indexes = item.index
+		// Если это не первый элемент на своём уровне (есть куда двигать)
+		if (indexes.at(-1) >= 1) {
+
+			if (indexes.length >= 2) {
+				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
+				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1] - 1)
+
+				return [...items]
+			} else {
+				return [...moveInArray(items, indexes[0], indexes[0] - 1)]
+			}
+		} else return items
+	},
+	downByItem: (items, item) => {
+		// [...SecondRecursive.moveItemWithFindRecursive(items, item, 1)]
+	},
+	downByIndex: (items, item) => {
+		const indexes = item.index
+
+		// Если это не последний элемент на своём уровне, есть место, куда двигать
+		if (getArrContainThisElementByIndex(items, indexes).array.length - 1 !== indexes.at(-1)) {
+			if (indexes.length >= 2) {
+				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
+				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1] + 2)
+				return [...items]
+			} else {
+				return [...moveInArray(items, indexes[0], indexes[0] + 2)]
+			}
+		} else return items
+	},
+	leftByItem: (items, item) => {
+		// [...SecondRecursive.toLeftRecursive(items, item)]
+	},
+	leftByIndex: (items, item) => {
+		const indexes = item.index
+
+		if (indexes.length >= 2) {
+			const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
+			array.insert(array[remainingIndexes[0]].child.splice(remainingIndexes[1], 1).at(0), remainingIndexes[0] + 1)
+			return [...items]
+		} else return items
+	},
+	rightByItem: (items, item) => {
+		// [...SecondRecursive.toRightRecursive(items, item)]
+	},
+	rightByIndex: (items, item) => {
+		const indexes = item.index
+
+		if (indexes.at(-1) !== 0) {
+			const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 1)
+			if (!array[remainingIndexes[0] - 1].child) {
+				array[remainingIndexes[0] - 1].child = []
+			}
+			array[remainingIndexes[0] - 1].child.insert(array.splice(remainingIndexes[0], 1).at(0), array[remainingIndexes[0] - 1].child.length)
+
+			return [...items]
+		} else return items
+	},
 }
