@@ -9,7 +9,7 @@ const ListNested = ({items}) => {
 		return <>
 			{items && items.map(item => (
 				<Fragment
-					key={item.text + item.index} // temp
+					key={item.text + item.index + item.id ?? ''} // temp
 				>
 					<Item
 						item={item}

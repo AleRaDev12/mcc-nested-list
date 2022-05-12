@@ -8,9 +8,9 @@ const DataPrint = () => {
 
 	return (
 		<pre className="bg-gray-900 rounded-lg p-3 overflow-auto">
-			Размер данных: {context.items && JSON.stringify(context.items).length}
+			Размер данных: {context.defaultData && JSON.stringify(context.defaultData).length}
 			<br/>
-			{context.items && JSON.stringify(context.items, null, ' ')}
+			{context.defaultData && JSON.stringify(context.defaultData, null, ' ')}
         </pre>
 	)
 }

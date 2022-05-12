@@ -36,15 +36,17 @@ export const second = {
 
 		const render = (items, indexes = []) => {
 
-			return items && items.forEach((item, index) => {
-				res.push({...item, index: [...indexes, index], level: level})
+			if (items) {
+				items.forEach((item, index) => {
+					res.push({...item, index: [...indexes, index], level: level})
 
-				if (item.child) {
-					level++
-					render(item.child, [...indexes, index])
-					level--
-				}
-			})
+					if (item.child) {
+						level++
+						render(item.child, [...indexes, index])
+						level--
+					}
+				})
+			}
 		}
 		render(items)
 		return res
@@ -53,7 +55,7 @@ export const second = {
 	removeByItem: (items, item) => {
 		return [...SecondRecursive.secondFunctionsRemove(items, item)]
 	},
-	removeByIndex: (items, item) => {
+	remove: (items, item) => {
 		const index = item.index
 		getArrContainThisElementByIndex(items, index).array
 			.splice(index.at(-1), 1)

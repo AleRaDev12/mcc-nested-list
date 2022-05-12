@@ -57,6 +57,8 @@ export const CRUDProvider = ({children}) => {
 
 	const [items, setItems] = useState()
 
+	const [defaultData, setDefaultData] = useState()
+
 	const togglePrintMethod = () => {
 
 		switch (printMethod) {
@@ -78,7 +80,6 @@ export const CRUDProvider = ({children}) => {
 			case 1:
 				return first
 			case 2:
-
 				return second
 			case 3:
 				return third
@@ -102,6 +103,7 @@ export const CRUDProvider = ({children}) => {
 	useEffect(() => {
 		console.log('--- useEffect from provider when [choice] = ', choice)
 		if (choice) reset()
+		setDefaultData(choice.data)
 	}, [choice])
 
 	const reset = () => {
@@ -110,7 +112,7 @@ export const CRUDProvider = ({children}) => {
 
 	const getItems = () => {
 		console.log('getItems() from provider')
-		if (items)
+		if (items) {
 			switch (printMethod) {
 				case LINEAR: {
 					return choice.getItemsForPrintLinear(items)
@@ -120,6 +122,7 @@ export const CRUDProvider = ({children}) => {
 				default:
 					return null
 			}
+		}
 	}
 
 	const getType = () => {
@@ -131,15 +134,7 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	const remove = (item) => {
-		switch (choice) {
-			case first:
-				setItems(first.remove(items, item, isMoveWithChildren))
-				break
-			case second:
-				// setItems(second.removeByItem(items, item))
-				setItems(second.removeByIndex(items, item))
-				break
-		}
+		setItems(choice.remove(items, item, isMoveWithChildren))
 	}
 
 	const addItem = () => {
@@ -147,64 +142,25 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	const updateTextItem = (item, newText) => {
-		switch (choice) {
-			case first:
-				setItems(first.update(items, item, newText))
-				break
-			case second:
-				// setItems(second.updateByItem(items, item, newText))
-				setItems(second.updateByIndex(items, item, newText))
-				break
-		}
+		setItems(choice.update(items, item, newText))
 	}
 
 	const toUp = (item) => {
-		switch (choice) {
-			case first:
-				setItems(first.up(items, item, isMoveWithChildren))
-				break
-			case second:
-				// setItems(second.upByItem(items, item))
-				setItems(second.upByIndex(items, item))
-				break
-		}
+		setItems(choice.up(items, item, isMoveWithChildren))
 	}
 
 	const toDown = (item) => {
-		switch (choice) {
-			case first:
-				setItems(choice.down(items, item, isMoveWithChildren))
-				break
-			case second:
-				// setItems(choice.downByItem(items, item))
-				setItems(second.downByIndex(items, item))
-				break
-		}
+
+		setItems(choice.down(items, item, isMoveWithChildren))
+
 	}
 
 	const toLeft = (item) => {
-		switch (choice) {
-			case first:
-				console.log(items)
-				setItems(first.left(items, item, isMoveWithChildren))
-				break
-			case second:
-				// setItems(second.leftByItem(items, item))
-				setItems(second.leftByIndex(items, item))
-				break
-		}
+		setItems(choice.left(items, item, isMoveWithChildren))
 	}
 
 	const toRight = (item) => {
-		switch (choice) {
-			case first:
-				setItems(choice.right(items, item, isMoveWithChildren))
-				break
-			case second:
-				// setItems(choice.rightByItem(items, item))
-				setItems(choice.rightByIndex(items, item))
-				break
-		}
+		setItems(choice.right(items, item, isMoveWithChildren))
 	}
 
 	console.log(' ')
@@ -218,6 +174,7 @@ export const CRUDProvider = ({children}) => {
 			getItems,
 			togglePrintMethod,
 			getType,
+			defaultData,
 			crud: {
 				remove,
 				add: addItem,
