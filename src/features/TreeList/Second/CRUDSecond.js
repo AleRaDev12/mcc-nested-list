@@ -1,11 +1,9 @@
 import {FullNestedComponentsListData} from '../../../shared/data/data-mock-second'
 import React from 'react'
-import {SecondRecursive} from './SecondRecursive'
 import {deepCopy, moveInArray} from '../../../shared/utils/utils'
 
 
 const getArrContainThisElementByIndex = (arr, index, level = 1) => {
-	console.log('index = ', index)
 	let indexCopy = deepCopy(index)
 	if (indexCopy.length <= level)
 		return {array: arr, remainingIndexes: indexCopy}
@@ -22,10 +20,9 @@ export const second = {
 				if (item.child) {
 					item.child = render(item.child, [...indexes, index])
 				}
-				return {...item, index: [...indexes, index]}
+				return {...item, index: 'indexes=' + JSON.stringify([...indexes, index])}
 			})
 		}
-		console.log('...render(items)', JSON.stringify([...render(items)], null, ' '))
 		return [...render(items)]
 	},
 
@@ -38,7 +35,7 @@ export const second = {
 
 			if (items) {
 				items.forEach((item, index) => {
-					res.push({...item, index: [...indexes, index], level: level})
+					res.push({...item, index: 'indexes=' + JSON.stringify([...indexes, index]), level: level})
 
 					if (item.child) {
 						level++
@@ -52,9 +49,6 @@ export const second = {
 		return res
 	},
 
-	removeByItem: (items, item) => {
-		return [...SecondRecursive.secondFunctionsRemove(items, item)]
-	},
 	remove: (items, item) => {
 		const index = item.index
 		getArrContainThisElementByIndex(items, index).array
@@ -62,18 +56,14 @@ export const second = {
 		return [...items]
 	},
 	add: (items) => [...items, {text: 'Empty item'}],
-	updateByItem: (items, item, newText) => {
-		item.text = newText
-		return [...items]
-	},
-	updateByIndex: (items, item, newText) => {
+
+	update: (items, item, newText) => {
 		const indexes = item.index
 		const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 1)
 		array[remainingIndexes[0]].text = newText
 		return [...items]
 	},
-	upByItem: (items, item) => [...SecondRecursive.moveItemWithFindRecursive(items, item, -1)],
-	upByIndex: (items, item) => {
+	up: (items, item) => {
 		const indexes = item.index
 		// Если это не первый элемент на своём уровне (есть куда двигать)
 		if (indexes.at(-1) >= 1) {
@@ -88,8 +78,7 @@ export const second = {
 			}
 		} else return items
 	},
-	downByItem: (items, item) => [...SecondRecursive.moveItemWithFindRecursive(items, item, 1)],
-	downByIndex: (items, item) => {
+	down: (items, item) => {
 		const indexes = item.index
 
 		// Если это не последний элемент на своём уровне, есть место, куда двигать
@@ -103,8 +92,7 @@ export const second = {
 			}
 		} else return items
 	},
-	leftByItem: (items, item) => [...SecondRecursive.toLeftRecursive(items, item)],
-	leftByIndex: (items, item) => {
+	left: (items, item) => {
 		const indexes = item.index
 
 		if (indexes.length >= 2) {
@@ -113,8 +101,7 @@ export const second = {
 			return [...items]
 		} else return items
 	},
-	rightByItem: (items, item) => [...SecondRecursive.toRightRecursive(items, item)],
-	rightByIndex: (items, item) => {
+	right: (items, item) => {
 		const indexes = item.index
 
 		if (indexes.at(-1) !== 0) {

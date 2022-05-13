@@ -1,10 +1,9 @@
 import {LinkedComponentsListData} from '../../../shared/data/data-mock-third'
 import React from 'react'
-import {deepCopy} from '../../../shared/utils/utils'
+import {deepCopy, moveInArray} from '../../../shared/utils/utils'
 
 
 const getArrContainThisElementByIndex = (arr, index, level = 1) => {
-	console.log('index = ', index)
 	let indexCopy = deepCopy(index)
 	if (indexCopy.length <= level)
 		return {array: arr, remainingIndexes: indexCopy}
@@ -27,7 +26,7 @@ export const third = {
 				if (child.id >= maxId)
 					maxId = child.id
 
-				child.index = [child.id, ' ', child.order]
+				child.index = 'id=' + child.id + ', ord=' + child.order
 
 				if (child.parent) {
 					const parent = itemsForPrint.find(parent => child.parent === parent.id)
@@ -54,29 +53,67 @@ export const third = {
 
 	// not worked
 	getItemsForPrintLinear: (items) => {
-		let level = 1
-		const res = []
 
-		const render = (items, indexes = []) => {
+		let arr = [...items]
 
-			return items && items.forEach((item, index) => {
-				res.push({...item, index: [...indexes, index], level: level})
+		arr.sort((a, b) => a.order - b.order)
+		arr = arr.map(item => {
+			return {...item, index: 'id=' + item.id + ', ord=' + item.order}
+		})
 
-				if (item.child) {
-					level++
-					render(item.child, [...indexes, index])
-					level--
+		const index = [...arr].reverse()
+
+		index.forEach((item, i) => {
+			if (item.parent !== null) {
+				const currItemIndex = arr.findIndex(f => f.id === item.id)
+				const parentIndex = arr.findIndex(f => f.id === item.parent)
+
+				let childCount = 1
+
+				if (currItemIndex < arr.length && arr[currItemIndex + 1].parent) {
+					if (arr[currItemIndex + 1].parent === arr[currItemIndex].id) {
+						childCount++
+						for (let i = currItemIndex + 2; i < arr.length; i++) {
+							if (arr[i].parent === arr[currItemIndex].id) {
+								childCount++
+							}
+						}
+					}
 				}
-			})
+
+				arr = moveInArray(arr, currItemIndex, parentIndex + 1, childCount)
+			}
+		})
+
+		let level = 1
+		for (let i = 0; i < arr.length; i++) {
+			if (!arr[i].parent) {
+				arr[i] = {...arr[i], level: 1, index: arr[i].index + ' lvl=' + level}
+			} else {
+				if (i > 0 && arr[i].parent === arr[i - 1].id) {
+					level = arr[i - 1].level + 1
+				} else {
+					// temp - можно оптимизировать
+					const f = arr.find(f => f.id === arr[i].parent)
+					if (f) level = f.level + 1
+				}
+				arr[i] = {...arr[i], level: level, index: arr[i].index + ' lvl=' + level}
+			}
+
 		}
 
-		render(items)
-		return res
+		console.log('arr=', arr)
+
+		return arr
 	},
 
 	remove: (items, item) => {
 
-		items = items.filter(f => f.id !== item.id)
+		console.log('remove')
+		console.log('item=', item)
+
+		// temp error - удалить детей рекурсивно
+		items = items.filter(f => f.id !== item.id && f.parent !== item.id)
 		items.forEach(fitem => {
 			if (fitem.order > item.order && fitem.parent === item.parent) {
 				fitem.order--

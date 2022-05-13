@@ -6,10 +6,7 @@ import {useNestedList} from './CRUDProvider'
 
 const Item = ({item, ...props}) => {
 
-	// console.log('usecontext start')
 	const context = useNestedList()
-	// const context = null
-	// console.log('usecontext end')
 
 	const [isTextChanging, setIsTextChanging] = useState(false)
 	const [nowText, setNowText] = useState()

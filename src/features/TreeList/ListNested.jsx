@@ -22,7 +22,7 @@ const ListNested = ({items}) => {
 
 	return (
 		<>
-			nested list
+			nested view
 			<ul>
 				{render(items)}
 			</ul>

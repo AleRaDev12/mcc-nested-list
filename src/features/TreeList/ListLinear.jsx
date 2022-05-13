@@ -6,7 +6,7 @@ const ListLinear = ({items}) => {
 
 	return (
 		<>
-			linear list
+			linear view
 			<ul>
 				{items && items.map(item => <Item
 					key={item.index}

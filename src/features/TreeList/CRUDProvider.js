@@ -11,7 +11,6 @@ export const useNestedList = () => {
 }
 
 export const CRUDProvider2 = ({children}) => {
-	console.log('--------- CRUDProvider render ---------')
 	return (
 		<CRUDContext.Provider value={{
 			items: () => null,
@@ -41,9 +40,6 @@ export const CRUDProvider2 = ({children}) => {
 }
 
 export const CRUDProvider = ({children}) => {
-	console.log(' ')
-	console.log(' ')
-	console.log('--------- CRUDProvider main init ---------')
 
 	const LINEAR = 'linear'
 	const NESTED = 'nested'
@@ -51,7 +47,7 @@ export const CRUDProvider = ({children}) => {
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
 
 	const [implementation, setImplementation] = useState(3)
-	const [printMethod, setPrintMethod] = useState(NESTED)
+	const [printMethod, setPrintMethod] = useState(LINEAR)
 
 	const [choice, setChoice] = useState(getChoice())
 
@@ -75,7 +71,6 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	function getChoice() {
-		console.log('getChoice() from provider, implementation = ', implementation)
 		switch (implementation) {
 			case 1:
 				return first
@@ -89,19 +84,12 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	useEffect(() => {
-		console.log(' ')
-		console.log('--------- CRUDProvider main render ---------')
-	}, [])
-
-	useEffect(() => {
-		console.log('--- useEffect from provider when [implementation] = ', implementation)
 		setChoice(getChoice())
 		if (choice === second)
 			setIsMoveWithChildren(true)
 	}, [implementation])
 
 	useEffect(() => {
-		console.log('--- useEffect from provider when [choice] = ', choice)
 		if (choice) reset()
 		setDefaultData(choice.data)
 	}, [choice])
@@ -111,7 +99,6 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	const getItems = () => {
-		console.log('getItems() from provider')
 		if (items) {
 			switch (printMethod) {
 				case LINEAR: {
@@ -162,9 +149,6 @@ export const CRUDProvider = ({children}) => {
 	const toRight = (item) => {
 		setItems(choice.right(items, item, isMoveWithChildren))
 	}
-
-	console.log(' ')
-	console.log(' ')
 
 	return (
 		<CRUDContext.Provider value={{

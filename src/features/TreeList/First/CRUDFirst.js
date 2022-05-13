@@ -13,32 +13,34 @@ export const first = {
 	getItemsForPrintNested: (items) => {
 
 		// add indexes or delete this function
-		// let resultArray = []
-		// let linksArray = [resultArray]
-		// let nowLevel = 1
-		// let to = linksArray[0]
-		//
-		// items.forEach(item => {
-		// 	if (item.level === nowLevel) {
-		// 		to.push({text: item.text, child: []})
-		// 		linksArray[nowLevel] = to.at(-1).child
-		// 	} else if (item.level > nowLevel) {
-		// 		if (!linksArray[nowLevel]) linksArray[nowLevel] = []
-		// 		to = linksArray[nowLevel]
-		// 		to.push({text: item.text, child: []})
-		// 		nowLevel = item.level
-		// 		linksArray[nowLevel] = to.at(-1).child
-		// 	} else if (item.level < nowLevel) {
-		// 		linksArray.pop()
-		// 		nowLevel = item.level
-		// 		to = linksArray[nowLevel - 1]
-		// 		to.push({text: item.text, child: []})
-		// 		linksArray[nowLevel] = to.at(-1).child
-		// 	}
-		// })
-		//
-		// return resultArray
-		return items
+		// return items
+
+		let resultArray = []
+		let linksArray = [resultArray]
+		let nowLevel = 1
+		let to = linksArray[0]
+
+		items.forEach((item, index) => {
+			if (item.level === nowLevel) {
+				to.push({text: item.text, level: item.level, child: [], index: index})
+				linksArray[nowLevel] = to.at(-1).child
+			} else if (item.level > nowLevel) {
+				if (!linksArray[nowLevel]) linksArray[nowLevel] = []
+				to = linksArray[nowLevel]
+				nowLevel = item.level
+				to.push({text: item.text, level: item.level, child: [], index: index})
+				linksArray[nowLevel] = to.at(-1).child
+
+			} else if (item.level < nowLevel) {
+				linksArray.pop()
+				nowLevel = item.level
+				to = linksArray[nowLevel - 1]
+				to.push({text: item.text, level: item.level, child: [], index: index})
+				linksArray[nowLevel] = to.at(-1).child
+			}
+		})
+
+		return resultArray
 	},
 
 	getItemsForPrintLinear: (items) => {
