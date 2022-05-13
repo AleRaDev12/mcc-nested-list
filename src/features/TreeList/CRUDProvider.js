@@ -124,8 +124,8 @@ export const CRUDProvider = ({children}) => {
 		setItems(choice.remove(items, item, isMoveWithChildren))
 	}
 
-	const addItem = () => {
-		setItems(choice.add(items))
+	const addItem = (index = null) => {
+		setItems(choice.add(items, index))
 	}
 
 	const updateTextItem = (item, newText) => {

@@ -24,14 +24,31 @@ const Item = ({item, ...props}) => {
 	}
 
 	const keyPressHandler = (e) => {
-		if (e.key === 'Enter') {
-			context.crud.update(item, nowText)
-			textChangingToggle()
+		switch (e.key) {
+			case 'Enter': {
+				context.crud.update(item, nowText)
+
+				if (e.shiftKey)
+					context.crud.add(item)
+
+				cancelEditing()
+				break
+			}
+			case
+			'Escape': {
+				setNowText(item.text)
+				textChangingToggle()
+				break
+			}
+			default:
+				break
 		}
+
 	}
 
 	const cancelEditing = () => {
 		textChangingToggle()
+		setNowText(item.text)
 	}
 
 	return (
@@ -46,11 +63,11 @@ const Item = ({item, ...props}) => {
 						type="text"
 						value={nowText}
 						onChange={e => textChangingHandler(e)}
-						onKeyUp={e => keyPressHandler(e)}
+						onKeyDown={e => keyPressHandler(e)}
 						onBlur={cancelEditing}
 						autoFocus={true}
 					/>
-					<span className="text-xs text-gray-200">press Enter for save</span>
+					<span className="text-xs text-gray-200">press Enter for save, <br/>Shift+Enter to add item after that</span>
 				</>
 				:
 				<>
