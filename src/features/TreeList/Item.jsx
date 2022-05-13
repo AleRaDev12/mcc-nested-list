@@ -29,7 +29,7 @@ const Item = ({item, ...props}) => {
 				context.crud.update(item, nowText)
 
 				if (e.shiftKey)
-					context.crud.add(item)
+					context.crud.add(item.index)
 
 				cancelEditing()
 				break
