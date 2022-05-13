@@ -1,7 +1,6 @@
 import {FullNestedComponentsListData} from '../../../shared/data/data-mock-second'
 import React from 'react'
-import {SecondRecursive} from './SecondRecursive'
-import {actualDataForLog, deepCopy, moveInArray} from '../../../shared/utils/utils'
+import {deepCopy, moveInArray} from '../../../shared/utils/utils'
 
 
 const getArrContainThisElementByIndex = (arr, index, level = 1) => {
@@ -14,18 +13,49 @@ const getArrContainThisElementByIndex = (arr, index, level = 1) => {
 
 export const second = {
 	data: FullNestedComponentsListData,
-	number: 2,
-	render: (items) => {
-		return <ul>{SecondRecursive.render(items)}</ul>
+
+	getItemsForPrintNested: (items) => {
+		const render = (items, indexes = []) => {
+			return items && items.map((item, index) => {
+				if (item.child) {
+					item.child = render(item.child, [...indexes, index])
+				}
+				return {...item, index: 'indexes=' + JSON.stringify([...indexes, index])}
+			})
+		}
+		return [...render(items)]
 	},
-	removeByItem: (items, item) => {
-		return [...SecondRecursive.secondFunctionsRemove(items, item)]
+
+	getItemsForPrintLinear: (items) => {
+
+		let level = 1
+		const res = []
+
+		const render = (items, indexes = []) => {
+
+			if (items) {
+				items.forEach((item, index) => {
+					res.push({...item, index: 'indexes=' + JSON.stringify([...indexes, index]), level: level})
+
+					if (item.child) {
+						level++
+						render(item.child, [...indexes, index])
+						level--
+					}
+				})
+			}
+		}
+		render(items)
+		return res
 	},
-	removeByIndex: (items, index) => {
+
+	remove: (items, item) => {
+		const index = item.index
 		getArrContainThisElementByIndex(items, index).array
 			.splice(index.at(-1), 1)
 		return [...items]
 	},
+
 	add: (items, indexes) => {
 
 		if (Array.isArray(indexes)) {
@@ -36,47 +66,44 @@ export const second = {
 			return [...items, {text: 'Empty item'}]
 
 	},
-	updateByItem: (items, item, newText) => {
-		item.text = newText
-		return [...items]
-	},
-	updateByIndex: (items, indexes, newText) => {
+
+	update: (items, item, newText) => {
+		const indexes = item.index
 		const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 1)
 		array[remainingIndexes[0]].text = newText
 		return [...items]
 	},
-	upByItem: (items, item) => [...SecondRecursive.moveItemWithFindRecursive(items, item, -1)],
-	upByIndex: (items, index) => {
-
+	up: (items, item) => {
+		const indexes = item.index
 		// Если это не первый элемент на своём уровне (есть куда двигать)
-		if (index.at(-1) >= 1) {
+		if (indexes.at(-1) >= 1) {
 
-			if (index.length >= 2) {
-				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, index, 2)
+			if (indexes.length >= 2) {
+				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
 				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1] - 1)
 
 				return [...items]
 			} else {
-				return [...moveInArray(items, index[0], index[0] - 1)]
+				return [...moveInArray(items, indexes[0], indexes[0] - 1)]
 			}
 		} else return items
 	},
-	downByItem: (items, item) => [...SecondRecursive.moveItemWithFindRecursive(items, item, 1)],
-	downByIndex: (items, index) => {
-		// Если это не последний элемент на своём уровне (есть куда двигать)
-		if (getArrContainThisElementByIndex(items, index).array.length - 1 !== index.at(-1)) {
-			if (index.length >= 2) {
-				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, index, 2)
-				console.log('это', actualDataForLog(array[remainingIndexes[0]].child))
-				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1])
+	down: (items, item) => {
+		const indexes = item.index
+
+		// Если это не последний элемент на своём уровне, есть место, куда двигать
+		if (getArrContainThisElementByIndex(items, indexes).array.length - 1 !== indexes.at(-1)) {
+			if (indexes.length >= 2) {
+				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
+				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1] + 2)
 				return [...items]
 			} else {
-				return [...moveInArray(items, index[0], index[0])]
+				return [...moveInArray(items, indexes[0], indexes[0] + 2)]
 			}
 		} else return items
 	},
-	leftByItem: (items, item) => [...SecondRecursive.toLeftRecursive(items, item)],
-	leftByIndex: (items, indexes) => {
+	left: (items, item) => {
+		const indexes = item.index
 
 		if (indexes.length >= 2) {
 			const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
@@ -84,8 +111,8 @@ export const second = {
 			return [...items]
 		} else return items
 	},
-	rightByItem: (items, item) => [...SecondRecursive.toRightRecursive(items, item)],
-	rightByIndex: (items, indexes) => {
+	right: (items, item) => {
+		const indexes = item.index
 
 		if (indexes.at(-1) !== 0) {
 			const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 1)

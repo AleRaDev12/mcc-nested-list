@@ -1,19 +1,23 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {useNestedList} from './CRUDProvider'
+import ListLinear from './ListLinear'
+import ListNested from './ListNested'
 
 
 const List = () => {
 
 	const context = useNestedList()
-	const [list, setlist] = useState([])
 
 	useEffect(() => {
-		setlist(context.render())
-	}, [context.items, context.implementation])
+
+	})
+	const items = context.getItems()
+	const type = context.getType()
 
 	return (
 		<>
-			{list}
+			{type === 'linear' && <ListLinear items={items}/>}
+			{type === 'nested' && <ListNested items={items}/>}
 		</>
 	)
 }
