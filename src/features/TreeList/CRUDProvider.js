@@ -47,7 +47,7 @@ export const CRUDProvider = ({children}) => {
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
 
 	const [implementation, setImplementation] = useState(3)
-	const [printMethod, setPrintMethod] = useState(LINEAR)
+	const [printMethod, setPrintMethod] = useState(NESTED)
 
 	const [choice, setChoice] = useState(getChoice())
 

@@ -54,6 +54,8 @@ export const third = {
 	// not worked
 	getItemsForPrintLinear: (items) => {
 
+		console.log('-------- items', items)
+
 		let arr = [...items]
 
 		arr.sort((a, b) => a.order - b.order)
@@ -101,8 +103,6 @@ export const third = {
 			}
 
 		}
-
-		console.log('arr=', arr)
 
 		return arr
 	},
