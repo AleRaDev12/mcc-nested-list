@@ -4,7 +4,22 @@
 
 	ul ul {
 		@apply ml-7;
-		//@apply border rounded-2xl border-gray-700;
+	}
+
+	ul {
+		@apply relative rounded-lg;
+
+		&::before {
+			content:       '';
+			left:          12px;
+			position:      absolute;
+			border-left:   2px solid rgba(255, 255, 255, 0.2);
+			border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+			border-radius: 0 0 0 0.5rem;
+			height:        100%;
+			width:         100px;
+		}
+
 	}
 
 	&--item {
