@@ -1,7 +1,4 @@
-export const FullNestedComponentsListData = [
-	{
-		text: 'Text 0 - second',
-	},
+export const DataForNested = [
 	{
 		text: 'Text 1',
 		child: [

@@ -1,7 +1,7 @@
 import {createContext, useContext, useEffect, useState} from 'react'
-import {first} from './First/CRUDFirst'
-import {second} from './Second/CRUDSecond'
-import {third} from './Third/CRUDThird'
+import {first} from './Handlers/HandlersLinear'
+import {second} from './Handlers/HandlersNested'
+import {third} from './Handlers/HandlersLinked'
 
 
 const CRUDContext = createContext()
@@ -10,44 +10,12 @@ export const useNestedList = () => {
 	return useContext(CRUDContext)
 }
 
-export const CRUDProvider2 = ({children}) => {
-	return (
-		<CRUDContext.Provider value={{
-			items: () => null,
-			implementation: () => null,
-			setImplementation: () => null,
-			getItems: () => null,
-			togglePrintMethod: () => null,
-			getType: () => null,
-			crud: {
-				remove: () => null,
-				add: () => null,
-				update: () => null,
-				toUp: () => null,
-				toDown: () => null,
-				toLeft: () => null,
-				toRight: () => null,
-				reset: () => null,
-			},
-			options: {
-				isMoveWithChildren: () => null,
-				isMoveWithChildrenToggle: () => null,
-			},
-		}}>
-			{children}
-		</CRUDContext.Provider>
-	)
-}
-
 export const CRUDProvider = ({children}) => {
-
-	const LINEAR = 'linear'
-	const NESTED = 'nested'
 
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
 
-	const [implementation, setImplementation] = useState(2)
-	const [printMethod, setPrintMethod] = useState(LINEAR)
+	const [implementation, setImplementation] = useState(1)
+	const [printMethod, setPrintMethod] = useState(1)
 
 	const [dataSet, setDataSet] = useState()
 
@@ -55,21 +23,6 @@ export const CRUDProvider = ({children}) => {
 
 	// Для вывода исходных данных в UI
 	const [defaultData, setDefaultData] = useState()
-
-	const togglePrintMethod = () => {
-
-		switch (printMethod) {
-			case LINEAR: {
-				setPrintMethod(NESTED)
-				break
-			}
-			case NESTED:
-				setPrintMethod(LINEAR)
-				break
-			default:
-				return null
-		}
-	}
 
 	function getDataSet() {
 		switch (implementation) {
@@ -102,22 +55,18 @@ export const CRUDProvider = ({children}) => {
 		setItems(JSON.parse(JSON.stringify(dataSet.data)))
 	}
 
-	const getItems = () => {
+	const getItemsForPrint = () => {
 		if (items) {
 			switch (printMethod) {
-				case LINEAR: {
+				case 1: {
 					return dataSet.getItemsForPrintLinear(items)
 				}
-				case NESTED:
+				case 2:
 					return dataSet.getItemsForPrintNested(items)
 				default:
 					return null
 			}
 		}
-	}
-
-	const getType = () => {
-		return printMethod
 	}
 
 	const isMoveWithChildrenToggle = () => {
@@ -159,9 +108,9 @@ export const CRUDProvider = ({children}) => {
 			items,
 			implementation,
 			setImplementation,
-			getItems,
-			togglePrintMethod,
-			getType,
+			getItemsForPrint,
+			printMethod,
+			setPrintMethod,
 			defaultData,
 			crud: {
 				remove,

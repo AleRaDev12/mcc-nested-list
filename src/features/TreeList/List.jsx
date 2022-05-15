@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useNestedList} from './CRUDProvider'
 import ListLinear from './ListLinear'
 import ListNested from './ListNested'
@@ -7,17 +7,12 @@ import ListNested from './ListNested'
 const List = () => {
 
 	const context = useNestedList()
-
-	useEffect(() => {
-
-	})
-	const items = context.getItems()
-	const type = context.getType()
+	const items = context.getItemsForPrint()
 
 	return (
 		<>
-			{type === 'linear' && <ListLinear items={items}/>}
-			{type === 'nested' && <ListNested items={items}/>}
+			{context.printMethod === 1 && <ListLinear items={items}/>}
+			{context.printMethod === 2 && <ListNested items={items}/>}
 		</>
 	)
 }

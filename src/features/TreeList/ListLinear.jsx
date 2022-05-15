@@ -6,7 +6,6 @@ const ListLinear = ({items}) => {
 
 	return (
 		<>
-			linear view
 			<ul>
 				{items && items.map(item => <Item
 					key={item.id ?? item.index}

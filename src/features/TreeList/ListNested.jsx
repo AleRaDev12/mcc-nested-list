@@ -14,7 +14,7 @@ const ListNested = ({items}) => {
 					<Item
 						item={item}
 					/>
-					{item.child && <ul> {render(item.child)}</ul>}
+					{item.child && item.child.length !== 0 && <ul> {render(item.child)}</ul>}
 				</Fragment>
 			))}
 		</>
@@ -22,7 +22,6 @@ const ListNested = ({items}) => {
 
 	return (
 		<>
-			nested view
 			<ul>
 				{render(items)}
 			</ul>

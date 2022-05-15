@@ -1,27 +1,17 @@
-import {LinkedComponentsListData} from '../../../shared/data/data-mock-third'
+import {DataForLinked} from '../../../shared/data/data-mock-third'
 import React from 'react'
-import {deepCopy, moveInArray} from '../../../shared/utils/utils'
 
-
-const getArrContainThisElementByIndex = (arr, index, level = 1) => {
-	let indexCopy = deepCopy(index)
-	if (indexCopy.length <= level)
-		return {array: arr, remainingIndexes: indexCopy}
-	else
-		return getArrContainThisElementByIndex(arr[indexCopy.shift()].child, indexCopy, level)
-}
 
 let maxId = 0
 const ORDER_START = 1
 
 export const third = {
-	data: LinkedComponentsListData,
-	name: 'third',
+	data: DataForLinked,
 
 	getItemsForPrintNested: (items) => {
 		if (items) {
 
-			let itemsForPrint = deepCopy(items)
+			let itemsForPrint = JSON.parse(JSON.stringify(items))
 
 			itemsForPrint.forEach((child, i) => {
 				if (child.id >= maxId)
@@ -36,8 +26,6 @@ export const third = {
 							parent.child = []
 						parent.child.push(child)
 						parent.child.sort((a, b) => a.order - b.order)
-					} else {
-						// ошибка в данных
 					}
 				}
 			})
@@ -57,12 +45,16 @@ export const third = {
 
 		arr.sort((a, b) => a.order - b.order)
 		arr = arr.map(item => {
-			return {...item, caption: 'id ' + item.id + ' ord ' + item.order}
+			return {...item, caption: 'id ' + item.id + ', ord ' + item.order}
 		})
 
 		const index = [...arr].reverse()
 
 		index.forEach((item, i) => {
+
+			if (item.id >= maxId)
+				maxId = item.id
+
 			if (item.parent !== null) {
 
 				const currItemIndex = arr.findIndex(f => f.id === item.id)
@@ -80,14 +72,14 @@ export const third = {
 						} else break
 					}
 				}
-				arr = moveInArray(arr, currItemIndex, parentIndex + 1, childCount)
+				arr = arr.move(currItemIndex, parentIndex + 1, childCount)
 			}
 		})
 
 		let level = 1
 		for (let i = 0; i < arr.length; i++) {
 			if (!arr[i].parent) {
-				arr[i] = {...arr[i], level: 1, caption: arr[i].caption + ' lvl ' + level}
+				arr[i] = {...arr[i], level: 1, caption: arr[i].caption + ', lvl ' + level}
 			} else {
 				if (i > 0 && arr[i].parent === arr[i - 1].id) {
 					level = arr[i - 1].level + 1
@@ -96,7 +88,7 @@ export const third = {
 					const f = arr.find(f => f.id === arr[i].parent)
 					if (f) level = f.level + 1
 				}
-				arr[i] = {...arr[i], level: level, caption: arr[i].caption + ' lvl ' + level}
+				arr[i] = {...arr[i], level: level, caption: arr[i].caption + ', lvl ' + level}
 			}
 		}
 
@@ -129,16 +121,20 @@ export const third = {
 		return [...items]
 	},
 
-	add: (items) => {
-		maxId++
+	add: (items, index) => {
+		if (typeof (index) !== 'number') {
+			maxId++
 
-		const order = items
-				.filter(item => !item.parent)
-				//temp - видимо здесь ошибка
-				.reduce((acc, curr) => acc.order > curr.order ? acc : curr).order
-			+ 1
+			const order = items
+					.filter(item => !item.parent)
+					//temp - переписать строку
+					.reduce((acc, curr) => acc.order > curr.order ? acc : curr).order
+				+ 1
 
-		return [...items, {text: 'Empty item', id: maxId, order: order, parent: null}]
+			return [...items, {text: 'Empty item', id: maxId, order: order, parent: null}]
+		} else {
+
+		}
 	},
 
 	update: (items, item, newText) => {

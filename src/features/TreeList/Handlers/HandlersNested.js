@@ -1,6 +1,5 @@
-import {FullNestedComponentsListData} from '../../../shared/data/data-mock-second'
+import {DataForNested} from '../../../shared/data/data-mock-second'
 import React from 'react'
-import {moveInArray} from '../../../shared/utils/utils'
 
 
 const getArrContainThisElementByIndex = (arr, index, level = 1) => {
@@ -12,8 +11,7 @@ const getArrContainThisElementByIndex = (arr, index, level = 1) => {
 }
 
 export const second = {
-	data: FullNestedComponentsListData,
-	name: 'second',
+	data: DataForNested,
 
 	getItemsForPrintNested: (items) => {
 		const render = (items, indexes = []) => {
@@ -81,11 +79,11 @@ export const second = {
 
 			if (indexes.length >= 2) {
 				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
-				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1] - 1)
+				array[remainingIndexes[0]].child = array[remainingIndexes[0]].child.move(remainingIndexes[1], remainingIndexes[1] - 1)
 
 				return [...items]
 			} else {
-				return [...moveInArray(items, indexes[0], indexes[0] - 1)]
+				return [...items.move(indexes[0], indexes[0] - 1)]
 			}
 		} else return items
 	},
@@ -96,10 +94,10 @@ export const second = {
 		if (getArrContainThisElementByIndex(items, indexes).array.length - 1 !== indexes.at(-1)) {
 			if (indexes.length >= 2) {
 				const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes, 2)
-				array[remainingIndexes[0]].child = moveInArray(array[remainingIndexes[0]].child, remainingIndexes[1], remainingIndexes[1] + 2)
+				array[remainingIndexes[0]].child = array[remainingIndexes[0]].child.move(remainingIndexes[1], remainingIndexes[1] + 2)
 				return [...items]
 			} else {
-				return [...moveInArray(items, indexes[0], indexes[0] + 2)]
+				return [...items.move(indexes[0], indexes[0] + 2)]
 			}
 		} else return items
 	},

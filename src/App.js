@@ -1,5 +1,6 @@
 import './shared/ui/index.scss'
 import TreeList from './features/TreeList/TreeList'
+import './shared/utils/utils'
 
 
 function App() {

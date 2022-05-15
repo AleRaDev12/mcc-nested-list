@@ -19,12 +19,6 @@ const ActionButtons = () => {
 			>
 				Reset to mock data
 			</button>
-			
-			<button
-				onClick={context.togglePrintMethod}
-			>
-				Change type
-			</button>
 		</div>
 	)
 }

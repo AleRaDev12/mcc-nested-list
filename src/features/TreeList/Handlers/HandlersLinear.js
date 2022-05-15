@@ -1,19 +1,14 @@
-import {NonNestedComponentsListData} from '../../../shared/data/data-mock-first'
-import {deleteItemsFromArray, moveInArray} from '../../../shared/utils/utils'
+import {DataForLinear} from '../../../shared/data/data-mock-first'
 import React from 'react'
 
 
 export const first = {
-	data: NonNestedComponentsListData,
-	name: 'first',
+	data: DataForLinear,
 
 	getCountWithChild: (items, index) => {
 	},
 
 	getItemsForPrintNested: (items) => {
-
-		// add indexes or delete this function
-		// return items
 
 		let resultArray = []
 		let linksArray = [resultArray]
@@ -21,23 +16,20 @@ export const first = {
 		let to = linksArray[0]
 
 		items.forEach((item, index) => {
-			if (item.level === nowLevel) {
-				to.push({text: item.text, level: item.level, child: [], index: index})
-				linksArray[nowLevel] = to.at(-1).child
-			} else if (item.level > nowLevel) {
-				if (!linksArray[nowLevel]) linksArray[nowLevel] = []
-				to = linksArray[nowLevel]
-				nowLevel = item.level
-				to.push({text: item.text, level: item.level, child: [], index: index})
-				linksArray[nowLevel] = to.at(-1).child
-
-			} else if (item.level < nowLevel) {
-				linksArray.pop()
-				nowLevel = item.level
-				to = linksArray[nowLevel - 1]
-				to.push({text: item.text, level: item.level, child: [], index: index})
-				linksArray[nowLevel] = to.at(-1).child
+			if (item.level !== nowLevel) {
+				if (item.level > nowLevel) {
+					if (!linksArray[nowLevel]) linksArray[nowLevel] = []
+					to = linksArray[nowLevel]
+					nowLevel = item.level
+				} else if (item.level < nowLevel) {
+					linksArray.pop()
+					nowLevel = item.level
+					to = linksArray[nowLevel - 1]
+				}
 			}
+
+			to.push({text: item.text, child: [], level: item.level, index: index, caption: index})
+			linksArray[nowLevel] = to.at(-1).child
 		})
 
 		return resultArray
@@ -45,7 +37,7 @@ export const first = {
 
 	getItemsForPrintLinear: (items) => {
 		return items.map((item, i) => {
-			return {...item, index: i}
+			return {...item, index: i, caption: i}
 		})
 	},
 
@@ -64,7 +56,9 @@ export const first = {
 			}
 		}
 
-		return deleteItemsFromArray(items, i, countWithChild)
+		items.splice(i, countWithChild)
+
+		return [...items]
 	},
 
 	add: (items, index) => {
@@ -117,7 +111,7 @@ export const first = {
 			}
 
 		}
-		return [...moveInArray(items, i, to, countWithChild)]
+		return [...items.move(i, to, countWithChild)]
 
 	},
 
@@ -165,7 +159,7 @@ export const first = {
 			}
 		}
 
-		return [...moveInArray(items, i, to, countWithChild)]
+		return [...items.move(i, to, countWithChild)]
 	},
 
 	left: (items, item, isMoveWithChildren) => {
@@ -174,27 +168,27 @@ export const first = {
 		if (items[i].level > 1) {
 			items[i].level--
 
-			if (isMoveWithChildren) {
-				// сместить все вложенные элементы влево
-				// определить количество элементов текущего элемента с его наследниками
-				let countWithChild = 1
-				let to = i + 1
+			if (!isMoveWithChildren)
+				return [...items]
 
-				const startLevel = items[i].level + 1
-				let isFindingCountWithChild = true
+			let countWithChild = 1
+			let to = i + 1
 
-				for (let j = i + 1; j < items.length; j++) {
-					if (items[j].level > startLevel && isFindingCountWithChild) {
-						countWithChild++
-						items[j].level--
-					} else if (items[j].level < startLevel) {
-						to = j
-						break
-					} else isFindingCountWithChild = false
-				}
+			const startLevel = items[i].level + 1
+			let isFindingCountWithChild = true
 
-				return [...moveInArray(items, i, to, countWithChild)]
+			for (let j = i + 1; j < items.length; j++) {
+				if (items[j].level > startLevel && isFindingCountWithChild) {
+					countWithChild++
+					items[j].level--
+				} else if (items[j].level < startLevel) {
+					to = j
+					break
+				} else isFindingCountWithChild = false
 			}
+
+			return [...items.move(i, to, countWithChild)]
+
 		} else return [...items]
 
 	},
