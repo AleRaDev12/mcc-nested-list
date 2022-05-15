@@ -1,10 +1,10 @@
 import {FullNestedComponentsListData} from '../../../shared/data/data-mock-second'
 import React from 'react'
-import {deepCopy, moveInArray} from '../../../shared/utils/utils'
+import {moveInArray} from '../../../shared/utils/utils'
 
 
 const getArrContainThisElementByIndex = (arr, index, level = 1) => {
-	let indexCopy = deepCopy(index)
+	let indexCopy = [...index]
 	if (indexCopy.length <= level)
 		return {array: arr, remainingIndexes: indexCopy}
 	else
@@ -13,6 +13,7 @@ const getArrContainThisElementByIndex = (arr, index, level = 1) => {
 
 export const second = {
 	data: FullNestedComponentsListData,
+	name: 'second',
 
 	getItemsForPrintNested: (items) => {
 		const render = (items, indexes = []) => {
@@ -20,7 +21,7 @@ export const second = {
 				if (item.child) {
 					item.child = render(item.child, [...indexes, index])
 				}
-				return {...item, index: 'indexes=' + JSON.stringify([...indexes, index])}
+				return {...item, index: [...indexes, index], caption: JSON.stringify([...indexes, index])}
 			})
 		}
 		return [...render(items)]
@@ -35,7 +36,7 @@ export const second = {
 
 			if (items) {
 				items.forEach((item, index) => {
-					res.push({...item, index: 'indexes=' + JSON.stringify([...indexes, index]), level: level})
+					res.push({...item, index: [...indexes, index], caption: JSON.stringify([...indexes, index]), level: level})
 
 					if (item.child) {
 						level++

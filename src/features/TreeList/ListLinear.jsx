@@ -9,7 +9,7 @@ const ListLinear = ({items}) => {
 			linear view
 			<ul>
 				{items && items.map(item => <Item
-					key={item.index}
+					key={item.id ?? item.index}
 					item={item}
 					style={item.level && {marginLeft: (item.level - 1) * 1.75 + 'em'}}
 				/>)}

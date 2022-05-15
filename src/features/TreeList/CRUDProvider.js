@@ -46,13 +46,14 @@ export const CRUDProvider = ({children}) => {
 
 	const [isMoveWithChildren, setIsMoveWithChildren] = useState(true)
 
-	const [implementation, setImplementation] = useState(3)
-	const [printMethod, setPrintMethod] = useState(NESTED)
+	const [implementation, setImplementation] = useState(2)
+	const [printMethod, setPrintMethod] = useState(LINEAR)
 
-	const [choice, setChoice] = useState(getChoice())
+	const [dataSet, setDataSet] = useState()
 
 	const [items, setItems] = useState()
 
+	// Для вывода исходных данных в UI
 	const [defaultData, setDefaultData] = useState()
 
 	const togglePrintMethod = () => {
@@ -70,7 +71,7 @@ export const CRUDProvider = ({children}) => {
 		}
 	}
 
-	function getChoice() {
+	function getDataSet() {
 		switch (implementation) {
 			case 1:
 				return first
@@ -84,28 +85,31 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	useEffect(() => {
-		setChoice(getChoice())
-		if (choice === second)
+		setItems(null)
+		setDataSet(getDataSet())
+		if (dataSet === second)
 			setIsMoveWithChildren(true)
 	}, [implementation])
 
 	useEffect(() => {
-		if (choice) reset()
-		setDefaultData(choice.data)
-	}, [choice])
+		if (dataSet) {
+			reset()
+			setDefaultData(dataSet.data)
+		}
+	}, [dataSet])
 
 	const reset = () => {
-		setItems(JSON.parse(JSON.stringify(choice.data)))
+		setItems(JSON.parse(JSON.stringify(dataSet.data)))
 	}
 
 	const getItems = () => {
 		if (items) {
 			switch (printMethod) {
 				case LINEAR: {
-					return choice.getItemsForPrintLinear(items)
+					return dataSet.getItemsForPrintLinear(items)
 				}
 				case NESTED:
-					return choice.getItemsForPrintNested(items)
+					return dataSet.getItemsForPrintNested(items)
 				default:
 					return null
 			}
@@ -121,33 +125,33 @@ export const CRUDProvider = ({children}) => {
 	}
 
 	const remove = (item) => {
-		setItems(choice.remove(items, item, isMoveWithChildren))
+		setItems(dataSet.remove(items, item, isMoveWithChildren))
 	}
 
 	const addItem = (index = null) => {
-		setItems(choice.add(items, index))
+		setItems(dataSet.add(items, index))
 	}
 
 	const updateTextItem = (item, newText) => {
-		setItems(choice.update(items, item, newText))
+		setItems(dataSet.update(items, item, newText))
 	}
 
 	const toUp = (item) => {
-		setItems(choice.up(items, item, isMoveWithChildren))
+		setItems(dataSet.up(items, item, isMoveWithChildren))
 	}
 
 	const toDown = (item) => {
 
-		setItems(choice.down(items, item, isMoveWithChildren))
+		setItems(dataSet.down(items, item, isMoveWithChildren))
 
 	}
 
 	const toLeft = (item) => {
-		setItems(choice.left(items, item, isMoveWithChildren))
+		setItems(dataSet.left(items, item, isMoveWithChildren))
 	}
 
 	const toRight = (item) => {
-		setItems(choice.right(items, item, isMoveWithChildren))
+		setItems(dataSet.right(items, item, isMoveWithChildren))
 	}
 
 	return (

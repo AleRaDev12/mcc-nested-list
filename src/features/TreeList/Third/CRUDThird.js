@@ -16,6 +16,7 @@ const ORDER_START = 1
 
 export const third = {
 	data: LinkedComponentsListData,
+	name: 'third',
 
 	getItemsForPrintNested: (items) => {
 		if (items) {
@@ -26,7 +27,7 @@ export const third = {
 				if (child.id >= maxId)
 					maxId = child.id
 
-				child.index = 'id=' + child.id + ', ord=' + child.order
+				child.caption = 'id ' + child.id + ', ord ' + child.order
 
 				if (child.parent) {
 					const parent = itemsForPrint.find(parent => child.parent === parent.id)
@@ -51,38 +52,34 @@ export const third = {
 		return items
 	},
 
-	// not worked
 	getItemsForPrintLinear: (items) => {
-
-		console.log('-------- items', items)
-
 		let arr = [...items]
 
 		arr.sort((a, b) => a.order - b.order)
 		arr = arr.map(item => {
-			return {...item, index: 'id=' + item.id + ', ord=' + item.order}
+			return {...item, caption: 'id ' + item.id + ' ord ' + item.order}
 		})
 
 		const index = [...arr].reverse()
 
 		index.forEach((item, i) => {
 			if (item.parent !== null) {
+
 				const currItemIndex = arr.findIndex(f => f.id === item.id)
 				const parentIndex = arr.findIndex(f => f.id === item.parent)
 
 				let childCount = 1
 
-				if (currItemIndex < arr.length && arr[currItemIndex + 1].parent) {
-					if (arr[currItemIndex + 1].parent === arr[currItemIndex].id) {
-						childCount++
-						for (let i = currItemIndex + 2; i < arr.length; i++) {
-							if (arr[i].parent === arr[currItemIndex].id) {
-								childCount++
-							}
-						}
+				if (currItemIndex + 1 < arr.length && arr[currItemIndex + 1].parent && arr[currItemIndex + 1].parent === arr[currItemIndex].id) {
+					childCount++
+					const parents = [arr[currItemIndex].id, currItemIndex + 1]
+					for (let i = currItemIndex + 2; i < arr.length; i++) {
+						if (arr[i].parent && parents.indexOf(arr[i].parent !== -1)) {
+							childCount++
+							parents.push(arr[i].id)
+						} else break
 					}
 				}
-
 				arr = moveInArray(arr, currItemIndex, parentIndex + 1, childCount)
 			}
 		})
@@ -90,7 +87,7 @@ export const third = {
 		let level = 1
 		for (let i = 0; i < arr.length; i++) {
 			if (!arr[i].parent) {
-				arr[i] = {...arr[i], level: 1, index: arr[i].index + ' lvl=' + level}
+				arr[i] = {...arr[i], level: 1, caption: arr[i].caption + ' lvl ' + level}
 			} else {
 				if (i > 0 && arr[i].parent === arr[i - 1].id) {
 					level = arr[i - 1].level + 1
@@ -99,9 +96,8 @@ export const third = {
 					const f = arr.find(f => f.id === arr[i].parent)
 					if (f) level = f.level + 1
 				}
-				arr[i] = {...arr[i], level: level, index: arr[i].index + ' lvl=' + level}
+				arr[i] = {...arr[i], level: level, caption: arr[i].caption + ' lvl ' + level}
 			}
-
 		}
 
 		return arr
@@ -109,16 +105,26 @@ export const third = {
 
 	remove: (items, item) => {
 
-		console.log('remove')
-		console.log('item=', item)
+		items = items.filter(f => f.id !== item.id)
 
-		// temp error - удалить детей рекурсивно
-		items = items.filter(f => f.id !== item.id && f.parent !== item.id)
+		// Обновить номера сортировки для всех следующих элементов в текущем уровне
 		items.forEach(fitem => {
 			if (fitem.order > item.order && fitem.parent === item.parent) {
 				fitem.order--
 			}
 		})
+
+		const childForRemove = [item.id]
+		//items.filter(f => f.parent === item.id)
+		do {
+			const nid = childForRemove.shift()
+			items = items.filter(fitem => {
+				if (fitem.parent && fitem.parent === nid) {
+					childForRemove.push(fitem.id)
+					return false
+				} else return true
+			})
+		} while (childForRemove.length !== 0)
 
 		return [...items]
 	},

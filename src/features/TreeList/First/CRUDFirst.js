@@ -5,6 +5,7 @@ import React from 'react'
 
 export const first = {
 	data: NonNestedComponentsListData,
+	name: 'first',
 
 	getCountWithChild: (items, index) => {
 	},

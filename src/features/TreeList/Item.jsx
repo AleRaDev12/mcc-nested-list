@@ -73,7 +73,7 @@ const Item = ({item, ...props}) => {
 				<>
 					<span
 						onClick={textChangingToggle}
-						data-id={JSON.stringify(item.index)}
+						data-id={item.caption}
 						className={styles.text}
 					>
 						{item.text}
