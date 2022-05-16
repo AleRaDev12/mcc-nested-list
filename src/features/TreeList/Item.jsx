@@ -28,8 +28,9 @@ const Item = ({item, ...props}) => {
 			case 'Enter': {
 				context.crud.update(item, nowText)
 
-				if (e.shiftKey)
-					context.crud.add(item.index)
+				if (e.shiftKey) {
+					context.crud.add(item)
+				}
 
 				cancelEditing()
 				break

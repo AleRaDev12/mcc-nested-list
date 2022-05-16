@@ -55,10 +55,10 @@ export const second = {
 		return [...items]
 	},
 
-	add: (items, indexes) => {
+	add: (items, item) => {
 
-		if (Array.isArray(indexes)) {
-			const {array, remainingIndexes} = getArrContainThisElementByIndex(items, indexes)
+		if (item !== null) {
+			const {array, remainingIndexes} = getArrContainThisElementByIndex(items, item.index)
 			array.push({text: 'Empty item'})
 			return [...items]
 		} else

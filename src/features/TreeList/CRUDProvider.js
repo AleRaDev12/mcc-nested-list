@@ -77,8 +77,8 @@ export const CRUDProvider = ({children}) => {
 		setItems(dataSet.remove(items, item, isMoveWithChildren))
 	}
 
-	const addItem = (index = null) => {
-		setItems(dataSet.add(items, index))
+	const addItem = (targetItem = null) => {
+		setItems(dataSet.add(items, targetItem))
 	}
 
 	const updateTextItem = (item, newText) => {

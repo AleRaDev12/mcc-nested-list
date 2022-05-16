@@ -121,10 +121,21 @@ export const third = {
 		return [...items]
 	},
 
-	add: (items, index) => {
-		if (typeof (index) !== 'number') {
-			maxId++
+	add: (items, item) => {
+		maxId++
 
+		if (item !== null) {
+			const id = maxId
+			// const currItem = items.find(f => f.id === id)
+			const parent = item.parent
+			const order = item.order + 1
+			items.forEach(fitem => {
+				if (fitem.parent === item.parent && fitem.order > item.order)
+					fitem.order++
+			})
+
+			return [...items, {text: 'Empty item', id, order, parent}]
+		} else {
 			const order = items
 					.filter(item => !item.parent)
 					//temp - переписать строку
@@ -132,8 +143,6 @@ export const third = {
 				+ 1
 
 			return [...items, {text: 'Empty item', id: maxId, order: order, parent: null}]
-		} else {
-
 		}
 	},
 

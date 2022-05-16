@@ -61,19 +61,19 @@ export const first = {
 		return [...items]
 	},
 
-	add: (items, index) => {
+	add: (items, item) => {
 
-		if (typeof (index) === 'number') {
+		if (item !== null) {
 			// temp - вынести в отдельную функцию (код повторяется)
 			let countWithChild = 1
-			for (let j = index + 1; j < items.length; j++) {
-				if (items[j].level > items[index].level)
+			for (let j = item.index + 1; j < items.length; j++) {
+				if (items[j].level > items[item.index].level)
 					countWithChild++
-				else if (items[j].level === items[index].level)
+				else if (items[j].level === items[item.index].level)
 					break
 			}
 
-			return [...items.insert({text: 'Empty item', level: items[index].level}, index + countWithChild)]
+			return [...items.insert({text: 'Empty item', level: items[item.index].level}, item.index + countWithChild)]
 		} else
 			return [...items, {text: 'Empty item', level: items.at(-1)?.level ?? 1}]
 	},
