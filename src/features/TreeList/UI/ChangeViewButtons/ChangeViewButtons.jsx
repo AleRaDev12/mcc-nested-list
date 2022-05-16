@@ -45,14 +45,16 @@ const ChangeViewButtons = () => {
 					onClick={e => changeViewType(1)}
 					className={classNames({'!bg-gray-600': printMethod === 1})}
 				>
-					Linear view (li and margin)
+					Unnested view <br/>
+					<span className="font-normal">one level unnested blocks, margin style</span>
 				</button>
 
 				<button
 					onClick={e => changeViewType(2)}
 					className={classNames({'!bg-gray-600': printMethod === 2})}
 				>
-					Nested view (nested ul)
+					Nested view <br/>
+					<span className="font-normal">nested ul</span>
 				</button>
 			</div>
 		</div>

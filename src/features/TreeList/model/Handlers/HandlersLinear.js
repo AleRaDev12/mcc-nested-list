@@ -62,7 +62,6 @@ export const first = {
 	},
 
 	add: (items, item) => {
-
 		if (item !== null) {
 			// temp - вынести в отдельную функцию (код повторяется)
 			let countWithChild = 1
