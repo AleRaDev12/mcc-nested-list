@@ -44,7 +44,6 @@ const Item = ({item, ...props}) => {
 			default:
 				break
 		}
-
 	}
 
 	const cancelEditing = () => {

@@ -4,6 +4,8 @@ import Item from '../Item/Item'
 
 const ListNested = ({items}) => {
 
+	console.log('nested', items)
+
 	const render = (items) => {
 		// temp change map to diff type iterable func
 		return <>

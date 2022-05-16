@@ -4,6 +4,8 @@ import Item from '../Item/Item'
 
 const ListLinear = ({items}) => {
 
+	console.log('linear', items)
+
 	return (
 		<>
 			<ul>

@@ -15,6 +15,7 @@ const ChangeViewButtons = () => {
 
 	const changeViewType = (i) => {
 		setPrintMethod(i)
+		console.log('setPrintMethod(i) from ChangeViewButtons')
 	}
 
 	return (

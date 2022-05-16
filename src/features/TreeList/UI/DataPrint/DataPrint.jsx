@@ -51,11 +51,11 @@ const DataPrint = () => {
 					</>
 				}
 
-				{dataType === 3 && context.getItemsForPrint() &&
-					<> {JSON.stringify(context.getItemsForPrint()).length}
+				{dataType === 3 && context.itemsForPrint &&
+					<> {JSON.stringify(context.itemsForPrint).length}
 
 						<br/>
-						{JSON.stringify(context.getItemsForPrint(), null, ' ')}
+						{JSON.stringify(context.itemsForPrint, null, ' ')}
 					</>
 				}
 

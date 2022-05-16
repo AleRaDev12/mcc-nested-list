@@ -16,7 +16,7 @@ export const CRUDProvider = ({children}) => {
 
 	const [implementation, setImplementation] = useState(1)
 	const [printMethod, setPrintMethod] = useState(1)
-
+	const [itemsForPrint, setItemsForPrint] = useState([])
 	const [dataSet, setDataSet] = useState()
 
 	const [items, setItems] = useState()
@@ -45,11 +45,19 @@ export const CRUDProvider = ({children}) => {
 	}, [implementation])
 
 	useEffect(() => {
+		console.log('dataset')
 		if (dataSet) {
 			reset()
 			setDefaultData(dataSet.data)
 		}
 	}, [dataSet])
+
+	useEffect(() => {
+		if (items) {
+			setItemsForPrint(getItemsForPrint())
+			console.log('useEffect [items, printMethod])')
+		}
+	}, [items, printMethod])
 
 	const reset = () => {
 		setItems(JSON.parse(JSON.stringify(dataSet.data)))
@@ -108,7 +116,7 @@ export const CRUDProvider = ({children}) => {
 			items,
 			implementation,
 			setImplementation,
-			getItemsForPrint,
+			itemsForPrint,
 			printMethod,
 			setPrintMethod,
 			defaultData,
