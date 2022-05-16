@@ -46,7 +46,7 @@ const ChangeViewButtons = () => {
 					className={classNames({'!bg-gray-600': printMethod === 1}, 'w-1/2')}
 				>
 					Unnested view <br/>
-					<span className="font-normal">one level unnested blocks, margin style</span>
+					<span className="font-normal">one level unnested blocks, inline margin style</span>
 				</button>
 
 				<button
