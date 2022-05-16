@@ -43,7 +43,7 @@ const ChangeViewButtons = () => {
 			<div className="inline-flex justify-center w-full mb-5 child:grow">
 				<button
 					onClick={e => changeViewType(1)}
-					className={classNames({'!bg-gray-600': printMethod === 1})}
+					className={classNames({'!bg-gray-600': printMethod === 1}, 'w-1/2')}
 				>
 					Unnested view <br/>
 					<span className="font-normal">one level unnested blocks, margin style</span>
@@ -51,7 +51,7 @@ const ChangeViewButtons = () => {
 
 				<button
 					onClick={e => changeViewType(2)}
-					className={classNames({'!bg-gray-600': printMethod === 2})}
+					className={classNames({'!bg-gray-600': printMethod === 2}, 'w-1/2')}
 				>
 					Nested view <br/>
 					<span className="font-normal">nested ul</span>
