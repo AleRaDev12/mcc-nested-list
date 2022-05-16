@@ -79,7 +79,7 @@ export const third = {
 		let level = 1
 		for (let i = 0; i < arr.length; i++) {
 			if (!arr[i].parent) {
-				arr[i] = {...arr[i], level: 1, caption: arr[i].caption + ', lvl ' + level}
+				arr[i] = {...arr[i], level: 1, caption: arr[i].caption + ', lvl ' + 1}
 			} else {
 				if (i > 0 && arr[i].parent === arr[i - 1].id) {
 					level = arr[i - 1].level + 1
