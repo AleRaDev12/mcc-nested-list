@@ -1,5 +1,5 @@
 import React from 'react'
-import {useNestedList} from './CRUDProvider'
+import {useNestedList} from '../../model/CRUDProvider'
 import ListLinear from './ListLinear'
 import ListNested from './ListNested'
 

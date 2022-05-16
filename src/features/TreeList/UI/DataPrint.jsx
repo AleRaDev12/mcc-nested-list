@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useNestedList} from './CRUDProvider'
+import {useNestedList} from '../model/CRUDProvider'
 import classNames from 'classnames'
 import styles from './DataPrint.module.scss'
 

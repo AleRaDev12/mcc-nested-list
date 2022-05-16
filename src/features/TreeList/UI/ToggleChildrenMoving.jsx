@@ -1,5 +1,5 @@
 import React from 'react'
-import {useNestedList} from './CRUDProvider'
+import {useNestedList} from '../model/CRUDProvider'
 
 
 const ToggleChildrenMoving = () => {
@@ -17,7 +17,6 @@ const ToggleChildrenMoving = () => {
 			/>
 			<span className="ml-2 text-xs sm:text-sm">Unlink from parents</span>
 		</label>
-
 	)
 }
 

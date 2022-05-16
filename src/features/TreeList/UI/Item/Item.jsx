@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {TiArrowDownThick, TiArrowLeftThick, TiArrowRightThick, TiArrowUpThick, TiDelete} from 'react-icons/ti'
 import styles from './Item.module.scss'
-import {useNestedList} from './CRUDProvider'
+import {useNestedList} from '../../model/CRUDProvider'
 
 
 const Item = ({item, ...props}) => {

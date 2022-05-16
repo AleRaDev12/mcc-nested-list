@@ -1,5 +1,5 @@
 import './shared/ui/index.scss'
-import TreeList from './features/TreeList/TreeList'
+import TreeList from './features/TreeList/UI/TreeList'
 import './shared/utils/utils'
 
 

@@ -1,4 +1,4 @@
-import {DataForLinked} from '../../../shared/data/data-mock-third'
+import {DataForLinked} from '../../../../shared/data/data-mock-third'
 import React from 'react'
 
 

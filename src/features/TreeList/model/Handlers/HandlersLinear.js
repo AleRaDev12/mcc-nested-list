@@ -1,4 +1,4 @@
-import {DataForLinear} from '../../../shared/data/data-mock-first'
+import {DataForLinear} from '../../../../shared/data/data-mock-first'
 import React from 'react'
 
 

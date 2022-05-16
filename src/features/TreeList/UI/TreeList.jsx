@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import {CRUDProvider} from './CRUDProvider'
+import {CRUDProvider} from '../model/CRUDProvider'
 import ActionButtons from './ActionButtons'
-import ChangeViewButtons from './ChangeViewButtons'
+import ChangeViewButtons from './ChangeViewButtons/ChangeViewButtons'
 import styles from './TreeList.module.scss'
 import ToggleChildrenMoving from './ToggleChildrenMoving'
 import DataPrint from './DataPrint'
-import List from './List'
+import List from './List/List'
 
 
 const TreeList = () => {

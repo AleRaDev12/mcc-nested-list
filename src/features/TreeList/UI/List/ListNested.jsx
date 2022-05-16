@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import Item from './Item'
+import Item from '../Item/Item'
 
 
 const ListNested = ({items}) => {

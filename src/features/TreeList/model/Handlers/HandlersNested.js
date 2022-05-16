@@ -1,4 +1,4 @@
-import {DataForNested} from '../../../shared/data/data-mock-second'
+import {DataForNested} from '../../../../shared/data/data-mock-second'
 import React from 'react'
 
 
