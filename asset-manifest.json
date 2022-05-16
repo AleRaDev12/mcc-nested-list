@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/mcc-nested-list/static/css/main.dc2f20a5.css",
-    "main.js": "/mcc-nested-list/static/js/main.02463036.js",
+    "main.css": "/mcc-nested-list/static/css/main.48e411f2.css",
+    "main.js": "/mcc-nested-list/static/js/main.2b9bcc68.js",
     "index.html": "/mcc-nested-list/index.html",
-    "main.dc2f20a5.css.map": "/mcc-nested-list/static/css/main.dc2f20a5.css.map",
-    "main.02463036.js.map": "/mcc-nested-list/static/js/main.02463036.js.map"
+    "main.48e411f2.css.map": "/mcc-nested-list/static/css/main.48e411f2.css.map",
+    "main.2b9bcc68.js.map": "/mcc-nested-list/static/js/main.2b9bcc68.js.map"
   },
   "entrypoints": [
-    "static/css/main.dc2f20a5.css",
-    "static/js/main.02463036.js"
+    "static/css/main.48e411f2.css",
+    "static/js/main.2b9bcc68.js"
   ]
 }
